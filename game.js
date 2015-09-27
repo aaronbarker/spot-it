@@ -9,28 +9,28 @@ function game(){
     var correctElem = document.querySelector('.num-correct');
     correctElem.innerHTML = numCorrect;
     
+    document.querySelector('.cards').classList.add('game')
 
     
     // add onlcick to items
     var body = document.querySelector("body");
     body.addEventListener("click",function(event){
-        console.debug(event);
         var curElem = event.target;
         // figure out which item was clicked, may need to go up the chain
         var theCard = closestWithClass(curElem,"card");
         var theCardItem = closestWithClass(curElem,"card__item");
         if(theCardItem){
-            console.log("The card",theCard);
-            console.log("The card item",theCardItem);
+            // console.log("The card",theCard);
+            // console.log("The card item",theCardItem);
             var itemNum = theCardItem.getAttribute("data-item");
-            console.log("The itemNum",itemNum);
+            // console.log("The itemNum",itemNum);
             var cardNum = theCard.getAttribute("data-card");
             var otherCard = document.querySelector('.card:not(.hide):not([data-card="'+cardNum+'"])');
-            console.log("The otherCard",otherCard);
+            // console.log("The otherCard",otherCard);
             
             // does the otherCard have the itemNum in it?
             var matchingItem = otherCard.querySelector('[data-item="'+itemNum+'"]');
-            console.debug("matchingItem",matchingItem);
+            // console.debug("matchingItem",matchingItem);
             if(matchingItem) {
                 theCardItem.classList.add("right");
                 matchingItem.classList.add("right");
@@ -50,8 +50,9 @@ function game(){
             }
         }
     });
-    // when clicked see if the match for the clicked one is in the other card
-    timer();
+    if(useTimer){
+        timer();
+    }
 }
 function showTwo(){
     // hiden em all first
@@ -66,7 +67,7 @@ function showTwo(){
     while(card1 === card2){
         card2 = Math.floor(Math.random() * wordCount)+1;
     }
-    console.debug(card1,card2);
+    // console.debug(card1,card2);
     document.querySelector('[data-card="'+card1+'"]').classList.remove("hide");
     document.querySelector('[data-card="'+card2+'"]').classList.remove("hide");
     
@@ -74,12 +75,13 @@ function showTwo(){
 }
 function showOne(){
     // keep the passed one on, hide the other one, and show one new one.
-    var cardLeft = document.querySelector('.card.hide');
-    card1 = cardLeft.getAttribute('data-card');
+    var cardLeft = document.querySelector('.card:not(.hide)');
+    card1 = parseInt(cardLeft.getAttribute('data-card'),10);
     card2 = Math.floor(Math.random() * wordCount)+1;
     while(card1 === card2){
         card2 = Math.floor(Math.random() * wordCount)+1;
     }
+    // console.debug("Keeping ",card1,"Adding ",card2, typeof card1, typeof card2);
     document.querySelector('[data-card="'+card2+'"]').classList.remove("hide");
 }
 function nextRound(cardToRemove){
@@ -93,6 +95,7 @@ function nextRound(cardToRemove){
             elem.classList.remove("wrong");
         });
     }
+    // console.log("Removing",cardToRemove);
     cardToRemove.classList.add('hide');
     showOne();
     

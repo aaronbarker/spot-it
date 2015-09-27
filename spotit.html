@@ -1,61 +1,79 @@
-<style>
-* {
-    box-sizing:border-box;
-}
-    .cards {
-        /*display:flex;
-        flex-direction:row;
-        flex-wrap: wrap;*/
-    }
-    .card {
-        border:1px solid black;
-        float:left;
-        width: 45%;
-        /*height:400px;*/
-        margin:10px;
-        display:flex;
-        flex-direction:row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        align-items: center;
-        page-break-inside: avoid;
-    }
-    .card:nth-child(2n+1){
-        clear:left;
-        /*border-color:red;*/
-    }
-    .card__num {
-        width:100%;
-        padding:20px;
-        text-align:center;
-    }
-    .card__item {
-        /*width:50%;*/
-        text-align:center;
-        vertical-align:middle;
-        /*border:1px solid red;*/
-        padding:20px;
-        width:33%;
-        border:2px solid transparent;
-    }
-    .card__item img {
-        width:100%;
-        max-width:100%;
-        
-    }
-    .hide{
-        display:none;
-    }
-    .right {
-        border:2px solid green;
-    }
-    .wrong {
-        border:2px solid red;
-    }
-</style>
-<span id="timer"></span>
-<p>Num correct: <span class="num-correct"></span>/10</p>
-<div id="output" class="cards"></div>
-<script src="game.js"></script>
-<script src="stopwatch.js"></script>
-<script src="spotit.js"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Spot it</title>
+        <style>
+        * {
+            box-sizing:border-box;
+        }
+            .cards {
+                /*display:flex;
+                flex-direction:row;
+                flex-wrap: wrap;*/
+            }
+            .card {
+                border:1px solid black;
+                float:left;
+                width: 45%;
+                /*height:400px;*/
+                margin:10px;
+                display:flex;
+                flex-direction:row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                align-items: center;
+                page-break-inside: avoid;
+            }
+            .card:nth-child(2n+1){
+                clear:left;
+                /*border-color:red;*/
+            }
+            .card__num {
+                width:100%;
+                padding:20px;
+                text-align:center;
+            }
+            .card__item {
+                /*width:50%;*/
+                text-align:center;
+                vertical-align:middle;
+                /*border:1px solid red;*/
+                padding:20px;
+                width:33%;
+                border:2px solid transparent;
+            }
+            .card__item:hover {
+                background:#f1f1f1;
+            }
+            .card__item img {
+                width:100%;
+                max-width:100%;
+                
+            }
+            .hide{
+                display:none;
+            }
+            .right {
+                border:2px solid green;
+            }
+            .wrong {
+                border:2px solid red;
+            }
+            .game .card:nth-child(2n+1){
+                clear:none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Spot it</h1>
+        <span id="timer"></span>
+        <p>Num correct: <span class="num-correct"></span>/10</p>
+        <div id="output" class="cards"></div>
+        <script src="game.js"></script>
+        <script src="data.js"></script>
+        <script src="stopwatch.js"></script>
+        <script src="spotit.js"></script>
+    </body>
+</html>
+

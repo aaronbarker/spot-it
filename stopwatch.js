@@ -95,7 +95,7 @@ function formatTime(time) {
 	s = Math.floor( time / 1000 );
 	ms = time % 1000;
 
-	newTime = pad(h, 2) + ':' + pad(m, 2) + ':' + pad(s, 2) + ':' + pad(ms, 3);
+	newTime =  pad(m, 2) + ':' + pad(s, 2) + ':' + pad(ms, 1);
 	return newTime;
 }
 
@@ -109,7 +109,7 @@ function update() {
 }
 
 function start() {
-	clocktimer = setInterval("update()", 1);
+	clocktimer = setInterval("update()", 100);
 	x.start();
 }
 
