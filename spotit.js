@@ -1,19 +1,46 @@
 var randomizeCards = true;
 var randomizeItems = true;
-var runGame = true;
-var useTimer = false;
+var useTimer = true;
+var wordCount;
+
+var classHide = 'hide';
+var classRight = 'right';
+var classWrong = 'wrong';
+
+var output = document.querySelector('#output');
 
 
-var wordCount = words.length;
 function spotIt(words,cardSets){
-    var randomNums;
+    wordCount = words.length;
+    document.querySelector('.wordsProvided').innerHTML = wordCount;
+    var randomNums, cardSet;
     var cards = [];
     console.log("word count", wordCount);
-    var cardSet = cardSets["words"+wordCount];
-    // cardSet.cards = shuffle(cardSet.cards);
-    // TODO: if we have more than a given cardSet numbre, truencate down to that number and notifiy. Or if we are doing onpage entry, have a selector that then shows the correct number of fields. or do we do a textarea with return as a delimiter
+    if(wordCount >= 57) {
+        cardSet = cardSets.words57;
+    } else if (wordCount >= 31){
+        cardSet = cardSets.words31;
+    } else if (wordCount >= 13){
+        cardSet = cardSets.words13;
+    } else if (wordCount >= 7){
+        cardSet = cardSets.words7;
+    } else if (wordCount >= 3){
+        cardSet = cardSets.words3;
+    }
     if(cardSet){
-        console.log("Have a matching count");
+        document.querySelector('.playgamewrapper').classList.remove(classHide);
+        document.querySelector('#details').classList.remove(classHide);
+        console.log('CardSet allows for '+cardSet.wordcount+' and you provided '+wordCount);
+        if(wordCount > cardSet.wordcount){
+            console.log('Truncating the last ' + (wordCount - cardSet.wordcount));
+            words = words.slice(0,cardSet.wordcount);
+            wordCount = words.length;
+            console.log("new wordCount is:"+ wordCount);
+        }
+        document.querySelector('.wordsUsed').innerHTML = wordCount;
+        document.querySelector('.numCards').innerHTML = cardSet.totalcards;
+
+        // console.log("Have enought words");
         console.log(cardSet);
         if(randomizeCards){
             // because cards are an object and not an array, we can't really randomize it.  But we can make a new array with the right number of numbers and then randomize that.
@@ -40,7 +67,8 @@ function spotIt(words,cardSets){
                 // console.log(wordNum,words[wordNum]);
                 var content = words[wordNum];
                 // console.log(content.indexOf('http'));
-                if(content.indexOf('http') === 0){// is a URL, so is an image
+                var regex = /\.(jpg|png|gif)$/;
+                if(content.indexOf('http') === 0 && regex.test(content)){// is a URL, so is an image
                     // console.debug("image");
                     // console.debug("wordNum",wordNum);
                     content = '<img src="'+words[wordNum]+'"/>';
@@ -52,9 +80,14 @@ function spotIt(words,cardSets){
             cards.push(cardCode);
         }
     } else {
-        console.log("no matching count, try again");
+        console.log("You need at least 3 words for this to work");
+        document.querySelector('.playgamewrapper').classList.add(classHide);
+        document.querySelector('#details').classList.add(classHide);
+        
     }
-    return cards;
+    // return cards;
+    
+    output.innerHTML = cards.join(' ');
 }
 
 function shuffle(array) {
@@ -76,11 +109,15 @@ function shuffle(array) {
   return array;
 }
 
-var result = spotIt(words,cardSets);
-var output = document.querySelector('#output');
-output.innerHTML = result.join(' ');
+// var result = spotIt(words,cardSets);
+// var output = document.querySelector('#output');
+// output.innerHTML = result.join(' ');
 
 
-if (runGame){
-    game();
-}
+var itemEntry = document.querySelector("#itemEntry");
+function loadItems(){
+    var newWords = itemEntry.value;
+    console.log("newWords",newWords,newWords.split("\n"));
+    spotIt(newWords.split("\n"),cardSets);
+};
+itemEntry.addEventListener("blur",loadItems);

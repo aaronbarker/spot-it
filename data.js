@@ -1,12 +1,14 @@
 // var words = ["a","b","c"]; // 3 words (good)
 // var words = ["a","b","c","d"]; // 4 words (bad)
 // var words = ["Aaron","Dallin","Daniel","Kaylene","Perry","Grandma","Fred"]; // 7 words (good)
-// var words = ["Aardvark","Buffalo","Cow","Doc","Elephant","Fox","Gopher","Hawk","Ibex","Joey","Kangaroo","Lion","Mouse"]; // 13 words (good)
+var words = ["Aardvark","Buffalo","Cow","Doc","Elephant","Fox","Gopher","Hawk","Ibex","Joey","Kangaroo","Lion","Mouse"]; // 13 words (good)
+var words = ["Aardvark","Buffalo","Cow","Doc","Elephant","Fox","Gopher","Hawk","Ibex","Joey","Kangaroo","Lion","Mouse"]; // 13 words (good)
+
+var states = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District Of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
 
 
 
-
-var words = [
+var images = [
     'http://photos.smugmug.com/photos/304577222_Qn7CQRf-Ti.jpg',
     'http://photos.smugmug.com/photos/403266789_mCSMHRD-Ti.jpg',
     'http://photos.smugmug.com/photos/304574382_FxSDMkH-Ti.jpg',
@@ -291,3 +293,16 @@ var cardSets = {
         }
     }
 };
+function demoData(){
+    [].forEach.call(document.querySelectorAll('[data-demo]'),function(elem){
+        console.log(elem);
+        elem.addEventListener('click',function(event){
+            console.log(1);
+            event.preventDefault();
+            var demo = elem.getAttribute('data-demo');
+            itemEntry.value = window[demo].join('\n');
+            loadItems();
+        });
+    });
+}
+demoData();

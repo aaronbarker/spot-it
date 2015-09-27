@@ -7,6 +7,9 @@
         * {
             box-sizing:border-box;
         }
+            body {
+                font-family:arial;
+            }
             .cards {
                 /*display:flex;
                 flex-direction:row;
@@ -63,17 +66,75 @@
             .game .card:nth-child(2n+1){
                 clear:none;
             }
+            .credits {
+                clear:both;
+            }
+            textarea {
+                width:90%;
+                height:200px;
+            }
+            @media print {
+                .hide-for-print {
+                    display:none;
+                }
+            }
         </style>
     </head>
     <body>
-        <h1>Spot it</h1>
-        <span id="timer"></span>
-        <p>Num correct: <span class="num-correct"></span>/10</p>
+        <section id="intro" class="hide-for-print">
+            <h1 class="hide-for-print">Spot it</h1>
+            <p class="hide playgamewrapper"><a href="#d" id="playgame">Play game</a></p>
+            <div id="gamestuff" class="hide">
+                <p>Timer: <span id="timer"></span></p>
+                <p>Num correct: <span class="num-correct"></span>/10</p>
+            </div>
+        </section>
         <div id="output" class="cards"></div>
+        
+        <section class="credits hide-for-print">
+            All the card logic taken from <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">Radigan Engineering</a>.
+        </section>
+        <secion class="dataEntry hide-for-print">
+            <h2>Provide data</h2>
+            <p>In the textarea below, enter the items you would like to be made into cards. This only works with certain numbers of items: 3, 7, 13, 31, 57. If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all.</p>
+            <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images.</p>
+            <textarea name="itemEntry" id="itemEntry"></textarea><br />
+            <button id="submit">Submit</button>
+            <h3>Demo Data</h3>
+            <ul>
+                <li><a href="#d" data-demo="words">Load small demo text</a></li>
+                <li><a href="#d" data-demo="states">Load large demo text</a></li>
+                <li> <a href="#d" data-demo="images">Load demo images</a></li>
+            </ul>
+            
+            <section id="details" class="hide">
+                <h3>Details</h3>
+                <dl>
+                    <dt>Words provided:</dt>
+                        <dd class="wordsProvided"></dd>
+                    <dt>Words used: </dt>
+                        <dd class="wordsUsed"></dd>
+                    <dt>Cards: </dt>
+                        <dd class="numCards"></dd>
+                </dl>
+            </section>
+        </section>
         <script src="game.js"></script>
         <script src="data.js"></script>
         <script src="stopwatch.js"></script>
         <script src="spotit.js"></script>
+        <section id="todo" class="hide-for-print">
+            <h2>Todo</h2>
+            <ul>
+                <li>Print with same sizes cards. Can have same size cards with flexbox but won't do page-break-inside:avoid. Or can have page-break-inside but not same size.</li>
+                <li>SASS</li>
+                <li>JS Compressing</li>
+            </ul>
+            <h3>If I am really bored</h3>
+            <ul>
+                <li>Make sure there are no duplicates</li>
+            </ul>
+        </section>
     </body>
 </html>
 

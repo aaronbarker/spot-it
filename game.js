@@ -32,8 +32,8 @@ function game(){
             var matchingItem = otherCard.querySelector('[data-item="'+itemNum+'"]');
             // console.debug("matchingItem",matchingItem);
             if(matchingItem) {
-                theCardItem.classList.add("right");
-                matchingItem.classList.add("right");
+                theCardItem.classList.add(classRight);
+                matchingItem.classList.add(classRight);
                 
                 numCorrect++;
                 correctElem.innerHTML = numCorrect;
@@ -46,7 +46,7 @@ function game(){
                     },500);
                 }
             } else {
-                theCardItem.classList.add("wrong");
+                theCardItem.classList.add(classWrong);
             }
         }
     });
@@ -59,7 +59,7 @@ function showTwo(){
     var cards = document.querySelectorAll(".card");
     [].forEach.call(cards,function(card){
         // console.log(card);
-        card.classList.add("hide");
+        card.classList.add(classHide);
     });
     card1 = Math.floor(Math.random() * wordCount)+1;
     card2 = Math.floor(Math.random() * wordCount)+1;
@@ -68,8 +68,8 @@ function showTwo(){
         card2 = Math.floor(Math.random() * wordCount)+1;
     }
     // console.debug(card1,card2);
-    document.querySelector('[data-card="'+card1+'"]').classList.remove("hide");
-    document.querySelector('[data-card="'+card2+'"]').classList.remove("hide");
+    document.querySelector('[data-card="'+card1+'"]').classList.remove(classHide);
+    document.querySelector('[data-card="'+card2+'"]').classList.remove(classHide);
     
     return [card1,card2];
 }
@@ -82,21 +82,21 @@ function showOne(){
         card2 = Math.floor(Math.random() * wordCount)+1;
     }
     // console.debug("Keeping ",card1,"Adding ",card2, typeof card1, typeof card2);
-    document.querySelector('[data-card="'+card2+'"]').classList.remove("hide");
+    document.querySelector('[data-card="'+card2+'"]').classList.remove(classHide);
 }
 function nextRound(cardToRemove){
     console.debug("Next round...");
     // clear out right and wrong classes
-    [].forEach.call(document.querySelectorAll('.right'),function(elem){
-        elem.classList.remove("right");
+    [].forEach.call(document.querySelectorAll('.'+classRight),function(elem){
+        elem.classList.remove(classRight);
     });
-    if(document.querySelectorAll('.wrong').length){
-        [].forEach.call(document.querySelectorAll('.wrong'),function(elem){
-            elem.classList.remove("wrong");
+    if(document.querySelectorAll('.'+classWrong).length){
+        [].forEach.call(document.querySelectorAll('.'+classWrong),function(elem){
+            elem.classList.remove(classWrong);
         });
     }
     // console.log("Removing",cardToRemove);
-    cardToRemove.classList.add('hide');
+    cardToRemove.classList.add(classHide);
     showOne();
     
 }
@@ -119,5 +119,11 @@ function done(){
 
 function timer(){
     show();
+    reset();
     start();
 }
+document.querySelector("#playgame").addEventListener("click",function(event){
+    event.preventDefault();
+    game();
+    document.querySelector("#gamestuff").classList.remove(classHide);
+});
