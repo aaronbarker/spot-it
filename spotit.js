@@ -1,5 +1,5 @@
-var randomizeCards = false;
-var randomizeItems = false;
+var randomizeCards = true;
+var randomizeItems = true;
 var runGame = true;
 var words = ["a","b","c"]; // 3 words (good)
 // var words = ["a","b","c","d"]; // 4 words (bad)
@@ -302,6 +302,7 @@ function spotIt(words,cardSets){
     console.log("word count", wordCount);
     var cardSet = cardSets["words"+wordCount];
     // cardSet.cards = shuffle(cardSet.cards);
+    // TODO: if we have more than a given cardSet numbre, truencate down to that number and notifiy. Or if we are doing onpage entry, have a selector that then shows the correct number of fields. or do we do a textarea with return as a delimiter
     if(cardSet){
         console.log("Have a matching count");
         console.log(cardSet);
@@ -320,7 +321,7 @@ function spotIt(words,cardSets){
             var cardCode = '<div class="card" data-card='+cardNum+'>';
             cardCode += '<span class="card__num">Card '+cardNum+'</span>';
             var curCard = cardSet.cards["card"+cardNum];
-            console.log("Card "+y, curCard);
+            // console.log("Card "+y, curCard);
             // randomize the items in the card, could make optional
             
             if(randomizeItems){
@@ -370,42 +371,7 @@ var result = spotIt(words,cardSets);
 var output = document.querySelector('#output');
 output.innerHTML = result.join(' ');
 
-function game(){
-    var card1, card2;
-    // show only two cards
-    
-    // show two random cards
-    var cardNums = showTwo();
 
-    
-    // add onlcick to items
-    var body = document.querySelector("body");
-    body.addEventListener("click",function(event){
-        console.debug(event);
-        var curElem = event.target;
-        
-    });
-    // when clicked see if the match for the clicked one is in the other card
-}
-function showTwo(){
-    // hiden em all first
-    var cards = document.querySelectorAll(".card");
-    [].forEach.call(cards,function(card){
-        // console.log(card);
-        card.classList.add("hide");
-    });
-    card1 = Math.floor(Math.random() * wordCount)+1;
-    card2 = Math.floor(Math.random() * wordCount)+1;
-    // make sure they aren't the same number
-    while(card1 === card2){
-        card2 = Math.floor(Math.random() * wordCount)+1;
-    }
-    console.debug(card1,card2);
-    document.querySelector('[data-card="'+card1+'"]').classList.remove("hide");
-    document.querySelector('[data-card="'+card2+'"]').classList.remove("hide");
-    
-    return [card1,card2];
-}
 if (runGame){
     game();
 }

@@ -36,6 +36,7 @@
         /*border:1px solid red;*/
         padding:20px;
         width:33%;
+        border:2px solid transparent;
     }
     .card__item img {
         width:100%;
@@ -45,7 +46,16 @@
     .hide{
         display:none;
     }
+    .right {
+        border:2px solid green;
+    }
+    .wrong {
+        border:2px solid red;
+    }
 </style>
-
+<span id="timer"></span>
+<p>Num correct: <span class="num-correct"></span>/10</p>
 <div id="output" class="cards"></div>
+<script src="game.js"></script>
+<script src="stopwatch.js"></script>
 <script src="spotit.js"></script>
