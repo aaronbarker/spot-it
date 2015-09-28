@@ -73,6 +73,18 @@ textarea {
     width:90%;
     height:200px;
 }
+.setData {
+    clear:both;
+}
+.setData:after {
+    content:"";
+    display:table;
+    clear:both;
+}
+.data-group {
+    width:45%;
+    float:left;
+}
 @media print {
     .hide-for-print {
         display:none;

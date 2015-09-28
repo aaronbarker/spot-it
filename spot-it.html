@@ -25,13 +25,31 @@
             <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
             <textarea name="itemEntry" id="itemEntry"></textarea><br />
             <button id="submit">Submit</button>
-            <h3>Demo Data</h3>
-            <ul>
-                <li><a href="#d" data-demo="words">Load small demo text</a></li>
-                <li><a href="#d" data-demo="states">Load large demo text</a></li>
-                <li> <a href="#d" data-demo="images2">Load demo images (31 portrait)</a></li>
-                <li> <a href="#d" data-demo="images">Load demo images (57 landscape)</a></li>
-            </ul>
+            
+            <div class="setData">
+                <section id="demo" class="data-group">
+                    <h3>Demo Data</h3>
+                    <ul>
+                        <li><a href="#d" data-demo="words">Load small demo text</a></li>
+                        <li><a href="#d" data-demo="states">Load large demo text</a></li>
+                        <li> <a href="#d" data-demo="images2">Load demo images (31 portrait)</a></li>
+                        <li> <a href="#d" data-demo="images">Load demo images (57 landscape)</a></li>
+                    </ul>
+                </section>
+                
+                <section id="saves" class="data-group">
+                    <h3>Saved data</h3>
+                    
+                    <p>You can optionally save your data for later. This is only stored on your machine, nothing is saved on the website itself.</p>
+                    
+                    <a href="#d" class="save-it">Save currently entered data</a>
+                    
+                    <p>Load previously saved data by clicking its name.</p>
+                    <ul class="saves">
+                        
+                    </ul>
+                </section>
+            </div>
             
             <section id="details" class="hide">
                 <h3>Details</h3>
