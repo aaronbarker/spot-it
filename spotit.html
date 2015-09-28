@@ -18,15 +18,17 @@
             .card {
                 border:1px solid black;
                 float:left;
-                width: 45%;
-                /*height:400px;*/
+                width: 41%;
+                /*height:225px;*/
+                /*width:300px;*/
                 margin:10px;
                 display:flex;
                 flex-direction:row;
                 flex-wrap: wrap;
-                justify-content: space-around;
-                align-items: center;
+                justify-content: center;
+                /*align-items: center;*/
                 page-break-inside: avoid;
+                padding: 5px;
             }
             .card:nth-child(2n+1){
                 clear:left;
@@ -42,15 +44,19 @@
                 text-align:center;
                 vertical-align:middle;
                 /*border:1px solid red;*/
-                padding:20px;
+                padding:0px;
                 width:33%;
                 border:2px solid transparent;
+                
+                display: flex;
+                justify-content: space-around;
+                flex-direction: column;
             }
             .card__item:hover {
                 background:#f1f1f1;
             }
             .card__item img {
-                width:100%;
+                /*width:100%;*/
                 max-width:100%;
                 
             }
@@ -97,22 +103,23 @@
         <secion class="dataEntry hide-for-print">
             <h2>Provide data</h2>
             <p>In the textarea below, enter the items you would like to be made into cards. This only works with certain numbers of items: 3, 7, 13, 31, 57. If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all.</p>
-            <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images.</p>
+            <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
             <textarea name="itemEntry" id="itemEntry"></textarea><br />
             <button id="submit">Submit</button>
             <h3>Demo Data</h3>
             <ul>
                 <li><a href="#d" data-demo="words">Load small demo text</a></li>
                 <li><a href="#d" data-demo="states">Load large demo text</a></li>
-                <li> <a href="#d" data-demo="images">Load demo images</a></li>
+                <li> <a href="#d" data-demo="images2">Load demo images (31 portrait)</a></li>
+                <li> <a href="#d" data-demo="images">Load demo images (57 landscape)</a></li>
             </ul>
             
             <section id="details" class="hide">
                 <h3>Details</h3>
                 <dl>
-                    <dt>Words provided:</dt>
+                    <dt>Items provided:</dt>
                         <dd class="wordsProvided"></dd>
-                    <dt>Words used: </dt>
+                    <dt>Items used: (may be different due to needing to be specific numbers)</dt>
                         <dd class="wordsUsed"></dd>
                     <dt>Cards: </dt>
                         <dd class="numCards"></dd>

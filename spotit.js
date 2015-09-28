@@ -108,6 +108,51 @@ function shuffle(array) {
 
   return array;
 }
+function parseImages(){
+    // parse through the images and determine if portrait, landscape or square. find the max width, make that the max-height for portraits to try to have some uniformity
+    var images = document.querySelectorAll(".cards img");
+    var maxWidth = 0;
+    var maxHeight = 0;
+    console.log(images);
+    [].forEach.call(images,function(image){
+        image.addEventListener("load",function(){
+            if(image.offsetWidth > maxWidth){
+                maxWidth = image.offsetWidth;
+            }
+            // clear out any existing sizing
+            image.classList.remove('landscape');
+            image.classList.remove('portrait');
+            if(image.offsetWidth > image.offsetHeight){
+                image.classList.add('landscape');
+            } else {
+                image.classList.add('portrait');
+            }
+            image.classList.add('loaded');
+            if(document.querySelectorAll(".cards img:not(.loaded)").length === 0){
+                console.log("All appear to be loaded");
+                console.log("maxWidth:",maxWidth);
+                imageAfterLoad(maxWidth,maxHeight);
+            }
+        });
+    });
+}
+
+function imageAfterLoad(maxWidth,maxHeight){
+    var portraits = document.querySelectorAll("img.portrait");
+    var landscapes = document.querySelectorAll("img.landscape");
+    var maxHeight = 0;
+    [].forEach.call(portraits,function(image){
+        // image.style.height = maxWidth+'px';
+        if(image.parentNode.offsetHeight > maxHeight){
+            maxHeight = image.parentNode.offsetHeight;
+        }
+    });
+    console.log("maxHeight:",maxHeight);
+    
+    [].forEach.call(landscapes,function(image){
+        image.parentNode.style.height = maxHeight+'px';
+    });
+}
 
 // var result = spotIt(words,cardSets);
 // var output = document.querySelector('#output');
@@ -119,5 +164,6 @@ function loadItems(){
     var newWords = itemEntry.value;
     console.log("newWords",newWords,newWords.split("\n"));
     spotIt(newWords.split("\n"),cardSets);
+    // parseImages();
 };
 itemEntry.addEventListener("blur",loadItems);
