@@ -142,16 +142,3 @@ var cardSets = {
         }
     }
 };
-function demoData(){
-    [].forEach.call(document.querySelectorAll('[data-demo]'),function(elem){
-        console.log(elem);
-        elem.addEventListener('click',function(event){
-            console.log(1);
-            event.preventDefault();
-            var demo = elem.getAttribute('data-demo');
-            itemEntry.value = window[demo].join('\n');
-            loadItems();
-        });
-    });
-}
-demoData();
