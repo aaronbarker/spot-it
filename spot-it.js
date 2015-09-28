@@ -73,7 +73,7 @@ function spotIt(words,cardSets){
 }
 
 function createCards(words, wordCount, randomNums){
-    console.debug("createCards");
+    // console.debug("createCards");
     var cards = [];
     for(var y = 1; y < (wordCount+1); y++){
         var cardNum = typeof randomNums === "object"?randomNums[y-1]:y;
@@ -84,7 +84,7 @@ function createCards(words, wordCount, randomNums){
     return cards;
 }
 function createCard(cardNum, curCard, words){
-    console.debug("createCard",curCard);
+    // console.debug("createCard",curCard);
     var cardCode = '<div class="card" data-card="'+cardNum+'" title="Card '+cardNum+'">';
     // cardCode += '<span class="card__num">Card '+cardNum+'</span>';
     // console.log("Card "+y, curCard);
@@ -101,7 +101,7 @@ function createCard(cardNum, curCard, words){
 }
 
 function createItems(curCard, words){
-    console.debug("createItems",curCard);
+    // console.debug("createItems",curCard);
     var items = "";
     curCard.forEach(function(wordNum){
         items += createItem(words, wordNum);
@@ -110,7 +110,7 @@ function createItems(curCard, words){
 }
 function createItem(words, wordNum){
     var content = words[wordNum];
-    console.debug("createItem",content);
+    // console.debug("createItem",content);
     var regex = /\.(jpg|png|gif|svg)$/;
     if(content.indexOf('http') === 0 && regex.test(content)){ // is a URL, so is an image
         // console.debug("image");
@@ -149,7 +149,7 @@ function loadItems(){
 
 function parseEntry(){
     var newWords = itemEntry.value;
-    console.log("newWords",newWords,newWords.split("\n"));
+    // console.log("newWords",newWords,newWords.split("\n"));
     return newWords.split("\n");
 }
 
@@ -194,7 +194,7 @@ function readStorage(){
     var saves = document.querySelector(".saves");
     saves.innerHTML = "";
     for(var key in storage) {
-        console.debug(key,storage[key]);
+        // console.debug(key,storage[key]);
         saves.innerHTML += '<li><a href="#d" data-saved="'+key+'" data-data="'+storage[key]+'">'+key+'</a> <a href="#d" class="save-remove" data-key="'+key+'">(delete)</a></li>';
     }
     
@@ -214,7 +214,7 @@ function readStorage(){
             var keyToKill = elem.getAttribute('data-key');
             
             var storage = localStorage.getItem("spot-it");
-            console.debug(storage);
+            // console.debug(storage);
             storage = JSON.parse(storage);
             var result={};
             for(var key in storage) {
