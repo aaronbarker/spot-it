@@ -2,6 +2,8 @@ var randomizeCards = true;
 var randomizeItems = true;
 var useTimer = true;
 var wordCount;
+var cardSet;
+
 
 var classHide = 'hide';
 var classRight = 'right';
@@ -13,9 +15,10 @@ var output = document.querySelector('#output');
 function spotIt(words,cardSets){
     wordCount = words.length;
     document.querySelector('.wordsProvided').innerHTML = wordCount;
-    var randomNums, cardSet;
+    var randomNums;
     var cards = [];
-    console.log("word count", wordCount);
+    // console.log("word count", wordCount);
+    // based on the wordCount, use a different cardSet
     if(wordCount >= 57) {
         cardSet = cardSets.words57;
     } else if (wordCount >= 31){
@@ -28,20 +31,25 @@ function spotIt(words,cardSets){
         cardSet = cardSets.words3;
     }
     if(cardSet){
+        // show game trigger
         document.querySelector('.playgamewrapper').classList.remove(classHide);
+        
+        // show details about what we did with word list
         document.querySelector('#details').classList.remove(classHide);
-        console.log('CardSet allows for '+cardSet.wordcount+' and you provided '+wordCount);
+        // console.log('CardSet allows for '+cardSet.wordcount+' and you provided '+wordCount);
         if(wordCount > cardSet.wordcount){
-            console.log('Truncating the last ' + (wordCount - cardSet.wordcount));
+            // console.log('Truncating the last ' + (wordCount - cardSet.wordcount));
             words = words.slice(0,cardSet.wordcount);
             wordCount = words.length;
-            console.log("new wordCount is:"+ wordCount);
+            // console.log("new wordCount is:"+ wordCount);
         }
         document.querySelector('.wordsUsed').innerHTML = wordCount;
         document.querySelector('.numCards').innerHTML = cardSet.totalcards;
 
         // console.log("Have enought words");
-        console.log(cardSet);
+        // console.log(cardSet);
+        
+        // optionally randomize the cards
         if(randomizeCards){
             // because cards are an object and not an array, we can't really randomize it.  But we can make a new array with the right number of numbers and then randomize that.
             randomNums = [];
@@ -52,33 +60,7 @@ function spotIt(words,cardSets){
             randomNums = shuffle(randomNums);
             // console.log("Randomnums before randomization", randomNums);
         }
-        for(var y = 1; y < (wordCount+1); y++){
-            var cardNum = typeof randomNums === "object"?randomNums[y-1]:y;
-            var cardCode = '<div class="card" data-card="'+cardNum+'" title="Card '+cardNum+'">';
-            // cardCode += '<span class="card__num">Card '+cardNum+'</span>';
-            var curCard = cardSet.cards["card"+cardNum];
-            // console.log("Card "+y, curCard);
-            // randomize the items in the card, could make optional
-            
-            if(randomizeItems){
-                curCard = shuffle(curCard);
-            }
-            curCard.forEach(function(wordNum){
-                // console.log(wordNum,words[wordNum]);
-                var content = words[wordNum];
-                // console.log(content.indexOf('http'));
-                var regex = /\.(jpg|png|gif)$/;
-                if(content.indexOf('http') === 0 && regex.test(content)){// is a URL, so is an image
-                    // console.debug("image");
-                    // console.debug("wordNum",wordNum);
-                    content = '<img src="'+words[wordNum]+'"/>';
-                }
-                cardCode += '<span class="card__item" data-item="'+wordNum+'" title="Item '+wordNum+'">'+content+'</span>';
-            });
-            // console.log("end card");
-            cardCode += '</div>';
-            cards.push(cardCode);
-        }
+        cards = createCards(words, wordCount, randomNums);
     } else {
         console.log("You need at least 3 words for this to work");
         document.querySelector('.playgamewrapper').classList.add(classHide);
@@ -90,6 +72,55 @@ function spotIt(words,cardSets){
     output.innerHTML = cards.join(' ');
 }
 
+function createCards(words, wordCount, randomNums){
+    console.debug("createCards");
+    var cards = [];
+    for(var y = 1; y < (wordCount+1); y++){
+        var cardNum = typeof randomNums === "object"?randomNums[y-1]:y;
+        var curCard = cardSet.cards["card"+cardNum];
+        
+        cards.push(createCard(cardNum, curCard, words));
+    }
+    return cards;
+}
+function createCard(cardNum, curCard, words){
+    console.debug("createCard",curCard);
+    var cardCode = '<div class="card" data-card="'+cardNum+'" title="Card '+cardNum+'">';
+    // cardCode += '<span class="card__num">Card '+cardNum+'</span>';
+    // console.log("Card "+y, curCard);
+    
+    // optionally randomize the items in the card
+    if(randomizeItems){
+        curCard = shuffle(curCard);
+    }
+    cardCode += createItems(curCard, words);
+    // console.log("end card");
+    cardCode += '</div>';
+    
+    return cardCode;
+}
+
+function createItems(curCard, words){
+    console.debug("createItems",curCard);
+    var items = "";
+    curCard.forEach(function(wordNum){
+        items += createItem(words, wordNum);
+    });
+    return items;
+}
+function createItem(words, wordNum){
+    var content = words[wordNum];
+    console.debug("createItem",content);
+    var regex = /\.(jpg|png|gif|svg)$/;
+    if(content.indexOf('http') === 0 && regex.test(content)){ // is a URL, so is an image
+        // console.debug("image");
+        // console.debug("wordNum",wordNum);
+        content = '<img src="'+words[wordNum]+'"/>';
+    }
+    return '<span class="card__item" data-item="'+wordNum+'" title="Item '+wordNum+'">'+content+'</span>';
+}
+
+// stolen from some random stack overflow article that I forgot to write down
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
 
@@ -108,65 +139,17 @@ function shuffle(array) {
 
   return array;
 }
-function parseImages(){
-    // parse through the images and determine if portrait, landscape or square. find the max width, make that the max-height for portraits to try to have some uniformity
-    var images = document.querySelectorAll(".cards img");
-    var maxWidth = 0;
-    var maxHeight = 0;
-    console.log(images);
-    [].forEach.call(images,function(image){
-        image.addEventListener("load",function(){
-            if(image.offsetWidth > maxWidth){
-                maxWidth = image.offsetWidth;
-            }
-            // clear out any existing sizing
-            image.classList.remove('landscape');
-            image.classList.remove('portrait');
-            if(image.offsetWidth > image.offsetHeight){
-                image.classList.add('landscape');
-            } else {
-                image.classList.add('portrait');
-            }
-            image.classList.add('loaded');
-            if(document.querySelectorAll(".cards img:not(.loaded)").length === 0){
-                console.log("All appear to be loaded");
-                console.log("maxWidth:",maxWidth);
-                imageAfterLoad(maxWidth,maxHeight);
-            }
-        });
-    });
-}
 
-function imageAfterLoad(maxWidth,maxHeight){
-    var portraits = document.querySelectorAll("img.portrait");
-    var landscapes = document.querySelectorAll("img.landscape");
-    var maxHeight = 0;
-    [].forEach.call(portraits,function(image){
-        // image.style.height = maxWidth+'px';
-        if(image.parentNode.offsetHeight > maxHeight){
-            maxHeight = image.parentNode.offsetHeight;
-        }
-    });
-    console.log("maxHeight:",maxHeight);
-    
-    [].forEach.call(landscapes,function(image){
-        image.parentNode.style.height = maxHeight+'px';
-    });
-}
-
-// var result = spotIt(words,cardSets);
-// var output = document.querySelector('#output');
-// output.innerHTML = result.join(' ');
-
-
+// stuff for entering in the data to be used
 var itemEntry = document.querySelector("#itemEntry");
 function loadItems(){
     var newWords = itemEntry.value;
     console.log("newWords",newWords,newWords.split("\n"));
     spotIt(newWords.split("\n"),cardSets);
-    // parseImages();
-};
+}
+
 itemEntry.addEventListener("blur",loadItems);
+
 function demoData(){
     [].forEach.call(document.querySelectorAll('[data-demo]'),function(elem){
         console.log(elem);
