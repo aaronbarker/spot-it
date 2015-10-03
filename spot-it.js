@@ -86,7 +86,7 @@ function createCards(words, wordCount, randomNums){
 }
 function createCard(cardNum, curCard, words){
     // console.debug("createCard",curCard);
-    var cardCode = '<div class="card" data-card="'+cardNum+'" title="Card '+cardNum+'">';
+    var cardCode = '<div class="card card'+ words.length +'" data-card="'+cardNum+'" title="Card '+cardNum+'">';
     // cardCode += '<span class="card__num">Card '+cardNum+'</span>';
     // console.log("Card "+y, curCard);
     

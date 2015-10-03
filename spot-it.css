@@ -15,8 +15,8 @@ body {
 }
 .card {
     border:1px solid #ccc;
-    /*float:left;*/
-    /*width: 41%;*/
+    float:left;
+    width: 41%;
     /*height:225px;*/
     /*width:300px;*/
     margin:10px;
@@ -104,16 +104,33 @@ textarea {
     height:2.95in;
     width:4.95in;
 }
-.print3x5 .card__item {
-    
+.print5x3 .card {
+    width:2.95in;
+    height:4.95in;
 }
 .print4x6 .card {
-    height:4in;
-    width:6in;
+    height:3.95in;
+    width:5.95in;
+}
+.print6x4 .card {
+    width:3.95in;
+    height:5.95in;
 }
 .print5x8 .card {
     height:5in;
     width:8in;
+}
+.per-row-2 .card__item { 
+    width: 50%;
+}
+.per-row-3 .card__item { 
+    width: 33.3%;
+}
+.per-row-4 .card__item { 
+    width: 25%;
+}
+.active {
+    background: #ccc;
 }
 @media print {
     .hide-for-print {
@@ -123,7 +140,10 @@ textarea {
         padding:0;
         margin:0;
     }
-    .card {
+    .print3x5 .card,
+    .print5x3 .card,
+    .print4x6 .card,
+    .print6x4 .card {
         margin:0;
         border:0;
     }

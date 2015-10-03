@@ -3,6 +3,10 @@ var printSizes = document.querySelectorAll('[data-size]');
     elem.addEventListener('click',function(event){
         event.preventDefault();
         setPrintSize(elem.getAttribute('data-size'));
+        if(document.querySelector('[data-size].active')){
+            document.querySelector('[data-size].active').classList.remove('active');
+        }
+        elem.classList.add('active');
     });
 });
 function setPrintSize(size){
@@ -13,6 +17,26 @@ function setPrintSize(size){
     makeStuffFit();
 }
 
+var rowCounts = document.querySelectorAll('[data-rowcount]');
+[].forEach.call(rowCounts,function(elem){
+    elem.addEventListener('click',function(event){
+        event.preventDefault();
+        setRowCount(elem.getAttribute('data-rowcount'));
+        if(document.querySelector('[data-rowcount].active')){
+            document.querySelector('[data-rowcount].active').classList.remove('active');
+        }
+        elem.classList.add('active');
+    });
+});
+
+function setRowCount(count){
+    [].forEach.call(rowCounts,function(elem){
+        document.querySelector('body').classList.remove('per-row-'+elem.getAttribute('data-rowcount'));
+    });
+    document.querySelector('body').classList.add('per-row-'+count);
+    makeStuffFit();
+}
+
 
 // make the images fit
 document.querySelector('body').insertAdjacentHTML("beforeend", '<style id="sizeCards"></style>');
@@ -20,7 +44,7 @@ var sizeCards = document.querySelector('#sizeCards');
 function makeStuffFit(){
     var cards = document.querySelectorAll('.card');
     var breakout = false;
-    for(var x = 50; x < 100; x++){
+    for(var x = 10; x < 100; x++){
         sizeCards.innerHTML = '.card__item img { width:'+x+'%; }';
         [].forEach.call(cards,function(card){
             // console.debug(card);
