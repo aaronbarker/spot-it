@@ -2,14 +2,17 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Spot it</title>
+        <title>Make your own Spot It clone</title>
         <link rel="stylesheet" href="spot-it.css" media="all" />
     </head>
     <body>
         <section id="intro" class="hide-for-print">
-            <h1 class="hide-for-print">Spot it</h1>
-            <p class="hide-for-print hide" id="urlWarning"><strong>URL Provided content.</strong> The spot it game you are viewing is populated via options provided in the URL. This is not content provided by this site and we take no responsibility for what is contained.  This option is made available for sharing spot it games with others without saving data on the website itself.</p>
-            <p class="hide-for-print">Make your own <a href="http://www.amazon.com/gp/product/B0039S7NO6">Spot it</a> game with your own words or images.</p>
+            <h1>Make your own Spot It clone</h1>
+            <p class="hide" id="urlWarning"><strong>URL Provided content.</strong> The spot it game you are viewing is populated via options provided in the URL. This is not content provided by this site and we take no responsibility for what is contained.  This option is made available for sharing spot it games with others without saving data on the website itself.</p>
+            <p>Make your own <a href="http://www.amazon.com/gp/product/B0039S7NO6">Spot it</a> game with your own words or images. All the card logic taken from <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">Radigan Engineering</a>.</p>
+            <p>
+                Set print size: <a href="#d" data-size="print3x5">3x5</a> <a href="#d" data-size="print4x6">4x6</a>
+            </p>
             <div id="gamestuff" class="hide">
                 <p class="playgamewrapper"><a href="#d" id="playgame">Play game</a></p>
                 <p>Timer: <span id="timer"></span></p>
@@ -20,20 +23,42 @@
         
         <secion class="dataEntry hide-for-print">
             <h2>Provide data</h2>
-            <p>In the textarea below, enter the items you would like to be made into cards. This only works with certain numbers of items:</p>
-            <ul>
-                <li><strong>3 items</strong> - 2 items per card</li>
-                <li><strong>7 items</strong> - 3 items per card</li>
-                <li><strong>13 items</strong> - 4 items per card</li>
-                <li><strong>31 items</strong> - 6 items per card</li>
-                <li><strong>57 items</strong> - 8 items per card</li>
-            </ul>
-            <p>If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all. I don't really understand the math/logic, so am not sure why there aren't 5 and 7 per card options.  I used what was made available in <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">this article</a>.</p>
             
-            <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
             <textarea name="itemEntry" id="itemEntry"></textarea><br />
             <button id="submit">Submit</button> <a href="" class="sharelink">Link to this set</a>
             
+            <p>
+                <a href="#data-instructions" class="expander">Show instructions on how to provide data</a>
+            </p>
+            <div id="data-instructions" class="hide">
+                <p>In the textarea above, enter the items you would like to be made into cards. This only works with certain numbers of items:</p>
+                <ul>
+                    <li><strong>3 items</strong> - 2 items per card</li>
+                    <li><strong>7 items</strong> - 3 items per card</li>
+                    <li><strong>13 items</strong> - 4 items per card</li>
+                    <li><strong>31 items</strong> - 6 items per card</li>
+                    <li><strong>57 items</strong> - 8 items per card</li>
+                </ul>
+                <p>If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all. I don't really understand the math/logic, so am not sure why there aren't 5 and 7 per card options.  I used what was made available in <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">this article</a>.</p>
+                
+                <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
+                
+                <p>You can optionally provide a label for images by adding a ^ to the end of the image URL and then putting your label.  <code>http://path/to/image.jpg^label here</code></p>
+            </div>
+            <p>
+                <a href="#details" class="expander">Show card build details</a>
+            </p>
+            <section id="details" class="hide">
+                <h3>Details</h3>
+                <dl>
+                    <dt>Items provided:</dt>
+                        <dd class="wordsProvided"></dd>
+                    <dt>Items used: (may be different due to needing to be specific numbers)</dt>
+                        <dd class="wordsUsed"></dd>
+                    <dt>Cards: </dt>
+                        <dd class="numCards"></dd>
+                </dl>
+            </section>
             <div class="setData">
                 <section id="demo" class="data-group">
                     <h3>Demo Data</h3>
@@ -59,22 +84,38 @@
                 </section>
             </div>
             
-            <section id="details" class="hide">
-                <h3>Details</h3>
-                <dl>
-                    <dt>Items provided:</dt>
-                        <dd class="wordsProvided"></dd>
-                    <dt>Items used: (may be different due to needing to be specific numbers)</dt>
-                        <dd class="wordsUsed"></dd>
-                    <dt>Cards: </dt>
-                        <dd class="numCards"></dd>
-                </dl>
-            </section>
+
         </section>
-        <section id="todo" class="hide-for-print">
+        <p>
+            <a href="#printing" class="expander">Show print instructions</a>
+        </p>
+        <section id="printing" class="printInstructions hide">
+            <h2>Print Instructions</h2>
+            <p>Printing these on to cards is a little bit of a process.  We have gone through a lot of effort to make it so that you CAN print these directly to cards to save you a lot of effort, but you have to do a bit of the work.</p>
+            
+            Layout landscape
+            Paper size (match your chosen size)
+            Margins none
+            
+            Print options. Print from your own printer if it supports printing on smaller paper
+            Print as photos as your chosen printer service.
+            Choose the size you want to print
+            When you print out you will need to 
+            
+            http://pdf2jpg.net/
+            
+            Tested on: Mac Chrome (don't have windows, hopefully Chrome there is similar)
+            I couldn't figure out how to make Safari or Firefox layout work. If you can, good job :)
+            
+            
+        </section>
+        
+        <p>
+            <a href="#todo" class="expander">Show the todo list</a>
+        </p>
+        <section id="todo" class="hide-for-print hide">
             <h2>Todo</h2>
             <ul>
-                <li>Print with same sizes cards. Can have same size cards with flexbox but won't do page-break-inside:avoid. Or can have page-break-inside but not same size.</li>
                 <li>SASS</li>
                 <li>JS Compressing</li>
             </ul>
@@ -82,9 +123,6 @@
             <ul>
                 <li>Make sure there are no duplicates</li>
             </ul>
-        </section>
-        <section class="credits hide-for-print">
-            All the card logic taken from <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">Radigan Engineering</a>.
         </section>
         <a href="https://github.com/aaronbarker/spot-it" class="hide-for-print"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
         <script src="game.js"></script>

@@ -36,7 +36,7 @@ function spotIt(words,cardSets){
         document.querySelector('.playgamewrapper').classList.remove(classHide);
         
         // show details about what we did with word list
-        document.querySelector('#details').classList.remove(classHide);
+        // document.querySelector('#details').classList.remove(classHide);
         // console.log('CardSet allows for '+cardSet.wordcount+' and you provided '+wordCount);
         if(wordCount > cardSet.wordcount){
             // console.log('Truncating the last ' + (wordCount - cardSet.wordcount));
@@ -65,7 +65,7 @@ function spotIt(words,cardSets){
     } else {
         console.log("You need at least 3 words for this to work");
         document.querySelector('.playgamewrapper').classList.add(classHide);
-        document.querySelector('#details').classList.add(classHide);
+        // document.querySelector('#details').classList.add(classHide);
         
     }
     // return cards;
@@ -111,12 +111,21 @@ function createItems(curCard, words){
 }
 function createItem(words, wordNum){
     var content = words[wordNum];
+    var label, content2, image;
     // console.debug("createItem",content);
+    if(content.indexOf("^") !== -1){
+        content2 = content.split("^");
+        console.log(content2);
+        content = content2[0];
+        label = content2[1];
+        console.log("has a label", label, content);
+    }
     var regex = /\.(jpg|png|gif|svg)$/;
     if(content.indexOf('http') === 0 && regex.test(content)){ // is a URL, so is an image
-        // console.debug("image");
+        console.debug("image");
         // console.debug("wordNum",wordNum);
-        content = '<img src="'+words[wordNum]+'"/>';
+        content = '<img src="'+content+'"/>';
+        if(label) content += '<span class="card__item__label">'+label+'</span>';
     }
     return '<span class="card__item" data-item="'+wordNum+'" title="Item '+wordNum+'">'+content+'</span>';
 }
@@ -177,3 +186,14 @@ function demoData(){
     });
 }
 demoData();
+
+var expanders = document.querySelectorAll(".expander");
+[].forEach.call(expanders,function(elem){
+    // console.log(elem);
+    elem.addEventListener('click',function(event){
+        event.preventDefault();
+        var target = elem.getAttribute('href');
+        document.querySelector(target).classList.remove(classHide);
+        elem.parentNode.removeChild(elem);
+    });
+});
