@@ -64,3 +64,43 @@ document.querySelector('.save-it').addEventListener('click',function(event){
     saveData();
 });
 document.querySelector('#saves').classList.remove(classHide)
+
+// stuff for accessing data from the URL
+
+// to save on the URL size, lets see if there is a base portion of the strings, usually for images
+function findBaseString(newWords){
+    function sharedStart(array){ // http://stackoverflow.com/questions/1916218/find-the-longest-common-starting-substring-in-a-set-of-strings/1917041#1917041
+        var A= array.concat().sort(), 
+        a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+        while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+        return a1.substring(0, i);
+    }
+    var prefix = sharedStart(newWords);
+    var croppedWords = [];
+    newWords.forEach(function(word){
+        croppedWords.push(word.replace(prefix,''));
+    });
+    
+    return '?prefix='+prefix+'&value='+croppedWords.join('|');
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+if(window.location.search){
+    var itemList = getParameterByName('value').split('|');
+    var prefix = getParameterByName('prefix');
+    itemList = itemList.map(function(item){
+        return prefix + item;
+    });
+    itemEntry.value = itemList.join("\n");
+    urlLoaded = true;
+    loadItems();
+    urlLoaded = false;
+    document.querySelector('#urlWarning').classList.remove(classHide);
+    
+}

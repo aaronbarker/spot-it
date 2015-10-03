@@ -165,23 +165,6 @@ function parseEntry(){
 
 itemEntry.addEventListener("blur",loadItems);
 
-// to save on the URL size, lets see if there is a base portion of the strings, usually for images
-function findBaseString(newWords){
-    function sharedStart(array){ // http://stackoverflow.com/questions/1916218/find-the-longest-common-starting-substring-in-a-set-of-strings/1917041#1917041
-        var A= array.concat().sort(), 
-        a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
-        while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
-        return a1.substring(0, i);
-    }
-    var prefix = sharedStart(newWords);
-    var croppedWords = [];
-    newWords.forEach(function(word){
-        croppedWords.push(word.replace(prefix,''));
-    });
-    
-    return '?prefix='+prefix+'&value='+croppedWords.join('|');
-}
-
 function demoData(){
     [].forEach.call(document.querySelectorAll('[data-demo]'),function(elem){
         // console.log(elem);
@@ -194,54 +177,3 @@ function demoData(){
     });
 }
 demoData();
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-if(window.location.search){
-    var itemList = getParameterByName('value').split('|');
-    var prefix = getParameterByName('prefix');
-    itemList = itemList.map(function(item){
-        return prefix + item;
-    });
-    itemEntry.value = itemList.join("\n");
-    urlLoaded = true;
-    loadItems();
-    urlLoaded = false;
-    document.querySelector('#urlWarning').classList.remove(classHide);
-    
-}
-
-
-// make the images fit
-document.querySelector('body').insertAdjacentHTML("beforeend", '<style id="sizeCards"></style>');
-var sizeCards = document.querySelector('#sizeCards');
-function makeStuffFit(){
-    var cards = document.querySelectorAll('.card');
-    var breakout = false;
-    for(var x = 50; x < 100; x++){
-        sizeCards.innerHTML = '.card__item img { width:'+x+'%; }';
-        [].forEach.call(cards,function(card){
-            // console.debug(card);
-            var items = card.querySelectorAll('.card__item');
-            var cardBottomX = card.offsetTop + card.offsetHeight;
-            // console.log('cardBottomX',cardBottomX);
-            [].forEach.call(items,function(item){
-                // console.log(item);
-                var itemBottomX = item.offsetTop + item.offsetHeight;
-                // console.log('itemBottomX',itemBottomX);
-                if(itemBottomX > cardBottomX && !breakout){
-                    console.log("breakout!",item, x);
-                    breakout = x-1; // go back one since that was the last to fit
-                }
-            });
-        });
-        if(breakout) {
-            sizeCards.innerHTML = '.card__item img { width:'+breakout+'%; }';
-        }
-    }
-}
