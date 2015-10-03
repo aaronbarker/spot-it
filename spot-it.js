@@ -115,14 +115,14 @@ function createItem(words, wordNum){
     // console.debug("createItem",content);
     if(content.indexOf("^") !== -1){
         content2 = content.split("^");
-        console.log(content2);
+        // console.log(content2);
         content = content2[0];
         label = content2[1];
-        console.log("has a label", label, content);
+        // console.log("has a label", label, content);
     }
     var regex = /\.(jpg|png|gif|svg)$/;
     if(content.indexOf('http') === 0 && regex.test(content)){ // is a URL, so is an image
-        console.debug("image");
+        // console.debug("image");
         // console.debug("wordNum",wordNum);
         content = '<img src="'+content+'"/>';
         if(label) content += '<span class="card__item__label">'+label+'</span>';
@@ -154,7 +154,7 @@ function shuffle(array) {
 var itemEntry = document.querySelector("#itemEntry");
 function loadItems(){
     newWords = parseEntry();
-    console.log(newWords);
+    // console.log(newWords);
     var croppedWords = findBaseString(newWords);
     // set the share link to have the currently provided data
     var queryString = findBaseString(newWords);
