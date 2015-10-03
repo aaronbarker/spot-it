@@ -8,23 +8,31 @@
     <body>
         <section id="intro" class="hide-for-print">
             <h1 class="hide-for-print">Spot it</h1>
-            <p class="hide playgamewrapper"><a href="#d" id="playgame">Play game</a></p>
+            <p class="hide-for-print hide" id="urlWarning"><strong>URL Provided content.</strong> The spot it game you are viewing is populated via options provided in the URL. This is not content provided by this site and we take no responsibility for what is contained.  This option is made available for sharing spot it games with others without saving data on the website itself.</p>
+            <p class="hide-for-print">Make your own <a href="http://www.amazon.com/gp/product/B0039S7NO6">Spot it</a> game with your own words or images.</p>
             <div id="gamestuff" class="hide">
+                <p class="playgamewrapper"><a href="#d" id="playgame">Play game</a></p>
                 <p>Timer: <span id="timer"></span></p>
                 <p>Num correct: <span class="num-correct"></span>/10</p>
             </div>
         </section>
         <div id="output" class="cards"></div>
         
-        <section class="credits hide-for-print">
-            All the card logic taken from <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">Radigan Engineering</a>.
-        </section>
         <secion class="dataEntry hide-for-print">
             <h2>Provide data</h2>
-            <p>In the textarea below, enter the items you would like to be made into cards. This only works with certain numbers of items: 3, 7, 13, 31, 57. If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all.</p>
+            <p>In the textarea below, enter the items you would like to be made into cards. This only works with certain numbers of items:</p>
+            <ul>
+                <li><strong>3 items</strong> - 2 items per card</li>
+                <li><strong>7 items</strong> - 3 items per card</li>
+                <li><strong>13 items</strong> - 4 items per card</li>
+                <li><strong>31 items</strong> - 6 items per card</li>
+                <li><strong>57 items</strong> - 8 items per card</li>
+            </ul>
+            <p>If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all. I don't really understand the math/logic, so am not sure why there aren't 5 and 7 per card options.  I used what was made available in <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">this article</a>.</p>
+            
             <p>Separate each item by a return.  You can use text, or if you provide URLs ending in .jpg, .gif or .png, we will load those images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
             <textarea name="itemEntry" id="itemEntry"></textarea><br />
-            <button id="submit">Submit</button>
+            <button id="submit">Submit</button> <a href="" class="sharelink">Link to this set</a>
             
             <div class="setData">
                 <section id="demo" class="data-group">
@@ -63,12 +71,6 @@
                 </dl>
             </section>
         </section>
-        <script src="game.js"></script>
-        <script src="data.js"></script>
-        <script src="demo.js"></script>
-        <script src="stopwatch.js"></script>
-        <script src="spot-it.js"></script>
-        <script src="storage.js"></script>
         <section id="todo" class="hide-for-print">
             <h2>Todo</h2>
             <ul>
@@ -81,7 +83,16 @@
                 <li>Make sure there are no duplicates</li>
             </ul>
         </section>
+        <section class="credits hide-for-print">
+            All the card logic taken from <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">Radigan Engineering</a>.
+        </section>
         <a href="https://github.com/aaronbarker/spot-it" class="hide-for-print"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+        <script src="game.js"></script>
+        <script src="data.js"></script>
+        <script src="demo.js"></script>
+        <script src="stopwatch.js"></script>
+        <script src="spot-it.js"></script>
+        <script src="storage.js"></script>
     </body>
 </html>
 
