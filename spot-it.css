@@ -30,7 +30,7 @@ body {
     justify-content: center;
     /*align-items: center;*/
     page-break-inside: avoid;
-    /*padding: 5px;*/
+    padding: 10px;
     overflow:hidden;
 }
 .card:nth-child(2n+1){
@@ -110,8 +110,8 @@ textarea {
     width:4.7in;
 }
 .print5x3 .card {
-    width:2.7in;
-    height:4.7in;
+    width:2.9in;
+    height:4.6in;
 }
 .print4x6 .card {
     height:3.7in;
@@ -119,7 +119,7 @@ textarea {
 }
 .print6x4 .card {
     width:3.7in;
-    height:5.7in;
+    height:5.6in;
 }
 .print5x8 .card {
     height:5in;
