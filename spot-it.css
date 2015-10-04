@@ -106,20 +106,20 @@ textarea {
     float:left;
 }
 .print3x5 .card {
-    height:2.95in;
-    width:4.95in;
+    height:2.7in;
+    width:4.7in;
 }
 .print5x3 .card {
-    width:2.95in;
-    height:4.95in;
+    width:2.7in;
+    height:4.7in;
 }
 .print4x6 .card {
-    height:3.95in;
-    width:5.95in;
+    height:3.7in;
+    width:5.7in;
 }
 .print6x4 .card {
-    width:3.95in;
-    height:5.95in;
+    width:3.7in;
+    height:5.7in;
 }
 .print5x8 .card {
     height:5in;
