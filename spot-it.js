@@ -121,8 +121,8 @@ function createItem(words, wordNum){
         label = content2[1];
         // console.log("has a label", label, content);
     }
-    var regex = /\.(jpg|png|gif|svg)$/;
-    if(content.indexOf('http') === 0 && regex.test(content)){ // is a URL, so is an image
+    // var regex = /\.(jpg|png|gif|svg)$/;
+    if(content.indexOf('http') === 0){ // is a URL, so is an image
         // console.debug("image");
         // console.debug("wordNum",wordNum);
         content = '<img src="'+content+'"/>';
