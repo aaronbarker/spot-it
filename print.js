@@ -56,7 +56,7 @@ function makeStuffFit(){
                 var itemBottomX = item.offsetTop + item.offsetHeight;
                 // console.log('itemBottomX',itemBottomX);
                 if(itemBottomX > cardBottomX && !breakout){
-                    console.log("breakout!",item, x);
+                    // console.log("breakout!",item, x);
                     breakout = x-1; // go back one since that was the last to fit
                 }
             });

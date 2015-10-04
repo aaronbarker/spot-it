@@ -91,7 +91,7 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-if(window.location.search){
+if(getParameterByName('value')){
     var itemList = getParameterByName('value').split('|');
     var prefix = getParameterByName('prefix');
     itemList = itemList.map(function(item){

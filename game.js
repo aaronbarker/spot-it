@@ -115,16 +115,23 @@ function spotItGame(){
         stop();
         document.querySelector("body").removeEventListener("click",bodyClick);
     }
+    
 
     function timer(){
         show();
         reset();
         start();
     }
+    document.querySelector(".quitgame").addEventListener("click",function(event){
+        event.preventDefault();
+        done();
+        document.querySelector('body').classList.remove('playingGame');
+    });
 }
 
 document.querySelector("#playgame").addEventListener("click",function(event){
     event.preventDefault();
     spotItGame();
     document.querySelector("#gamestuff").classList.remove(classHide);
+    document.querySelector('body').classList.add('playingGame');
 });

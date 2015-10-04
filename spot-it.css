@@ -13,6 +13,10 @@ body {
     overflow:scroll;
     border:2px solid grey;
 }
+.playingGame .cards {
+    overflow:visible;
+    border: 0;
+}
 .card {
     border:1px solid #ccc;
     float:left;
@@ -131,10 +135,29 @@ textarea {
     width: 25%;
 }
 .active {
-    background: #ccc;
+    background: #00e965;
 }
 .showlabels .card__item__label {
     display:inline;
+}
+.show-with-items {
+    display:none;
+}
+.have-items .show-with-items {
+    display:block;
+}
+.displayOptions a {
+    display: inline-block;
+    padding:3px;
+}
+.playingGame .hide-with-game {
+    display:none;
+}
+.show-with-game {
+    display:none;
+}
+.playingGame .show-with-game {
+    display:block;
 }
 @media print {
     .hide-for-print {

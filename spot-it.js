@@ -11,6 +11,7 @@ var classRight = 'right';
 var classWrong = 'wrong';
 
 var output = document.querySelector('#output');
+var itemEntry = document.querySelector("#itemEntry");
 
 
 function spotIt(words,cardSets){
@@ -71,12 +72,6 @@ function spotIt(words,cardSets){
     // return cards;
     
     output.innerHTML = cards.join(' ');
-    
-    var loadDemo = getParameterByName('demo');
-    if(loadDemo){
-        itemEntry.value = window[loadDemo].join('\n');
-        loadItems();
-    }
 }
 
 function createCards(words, wordCount, randomNums){
@@ -157,18 +152,23 @@ function shuffle(array) {
 }
 
 // stuff for entering in the data to be used
-var itemEntry = document.querySelector("#itemEntry");
+
 function loadItems(){
     newWords = parseEntry();
-    // console.log(newWords);
-    var croppedWords = findBaseString(newWords);
-    // set the share link to have the currently provided data
-    var queryString = findBaseString(newWords);
-    var bookmark = window.location.origin + window.location.pathname + queryString;
-    document.querySelector('.sharelink').setAttribute('href',bookmark);
-    spotIt(newWords,cardSets);
-    if(!urlLoaded){
-        document.querySelector('#urlWarning').classList.add(classHide);
+    if(newWords.length > 2){
+        // console.log(newWords);
+        var croppedWords = findBaseString(newWords);
+        // set the share link to have the currently provided data
+        var queryString = findBaseString(newWords);
+        var bookmark = window.location.origin + window.location.pathname + queryString;
+        document.querySelector('.sharelink').setAttribute('href',bookmark);
+        spotIt(newWords,cardSets);
+        if(!urlLoaded){
+            document.querySelector('#urlWarning').classList.add(classHide);
+        }
+        document.querySelector('body').classList.add('have-items');
+    } else {
+        document.querySelector('body').classList.remove('have-items');
     }
 }
 
@@ -177,8 +177,6 @@ function parseEntry(){
     // console.log("newWords",newWords,newWords.split("\n"));
     return newWords.split("\n");
 }
-
-itemEntry.addEventListener("blur",loadItems);
 
 function demoData(){
     [].forEach.call(document.querySelectorAll('[data-demo]'),function(elem){
@@ -191,25 +189,42 @@ function demoData(){
         });
     });
 }
-demoData();
 
-var expanders = document.querySelectorAll(".expander");
-[].forEach.call(expanders,function(elem){
-    // console.log(elem);
-    elem.addEventListener('click',function(event){
-        event.preventDefault();
-        var target = elem.getAttribute('href');
-        document.querySelector(target).classList.remove(classHide);
-        elem.parentNode.removeChild(elem);
+function setupControls(){
+    itemEntry.addEventListener("blur",loadItems);
+    var expanders = document.querySelectorAll(".expander");
+    [].forEach.call(expanders,function(elem){
+        // console.log(elem);
+        elem.addEventListener('click',function(event){
+            event.preventDefault();
+            var target = elem.getAttribute('href');
+            document.querySelector(target).classList.remove(classHide);
+            elem.parentNode.removeChild(elem);
+        });
     });
-});
+    var showlabels = document.querySelector("#showvalues");
+    showlabels.addEventListener('change',function(){
+        // console.log("changed",showlabels.checked);
+        if(showlabels.checked){
+            document.querySelector('body').classList.add('showlabels');
+        } else {
+            document.querySelector('body').classList.remove('showlabels');
+        }
+        makeStuffFit();
+    });
+}
 
-var showlabels = document.querySelector("#showvalues");
-showlabels.addEventListener('change',function(){
-    console.log("changed",showlabels.checked);
-    if(showlabels.checked){
-        document.querySelector('body').classList.add('showlabels');
-    } else {
-        document.querySelector('body').classList.remove('showlabels');
+
+function init(){
+    demoData();
+    setupControls();
+    
+    var loadDemo = getParameterByName('demo');
+    if(loadDemo){
+        // console.log("loadDemo",loadDemo);
+        itemEntry.value = window[loadDemo].join('\n');
+        loadItems();
     }
-});
+}
+
+document.addEventListener('DOMContentLoaded', init);
