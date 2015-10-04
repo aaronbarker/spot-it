@@ -6,7 +6,7 @@ var states = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','C
 
 
 // landscapes
-var images = [
+var landscapes = [
     'http://photos.smugmug.com/photos/304577222_Qn7CQRf-S.jpg^Salt Lake',
     'http://photos.smugmug.com/photos/403266789_mCSMHRD-S.jpg^Timpanogos',
     'http://photos.smugmug.com/photos/359969600_nRwXqXM-S.jpg^Salt Lake',
@@ -67,7 +67,7 @@ var images = [
 ];
 
 // portraits
-var images2 = [
+var portraits = [
     'http://photos.smugmug.com/photos/304574382_FxSDMkH-S.jpg^Salt Lake',
     'http://photos.smugmug.com/photos/304575261_p3D5j2V-S.jpg^Salt Lake',
     'http://photos.smugmug.com/photos/4089086406_s7JdN8F-S.jpg^Payson',

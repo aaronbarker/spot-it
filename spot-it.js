@@ -71,6 +71,12 @@ function spotIt(words,cardSets){
     // return cards;
     
     output.innerHTML = cards.join(' ');
+    
+    var loadDemo = getParameterByName('demo');
+    if(loadDemo){
+        itemEntry.value = window[loadDemo].join('\n');
+        loadItems();
+    }
 }
 
 function createCards(words, wordCount, randomNums){
