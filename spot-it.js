@@ -197,3 +197,13 @@ var expanders = document.querySelectorAll(".expander");
         elem.parentNode.removeChild(elem);
     });
 });
+
+var showlabels = document.querySelector("#showvalues");
+showlabels.addEventListener('change',function(){
+    console.log("changed",showlabels.checked);
+    if(showlabels.checked){
+        document.querySelector('body').classList.add('showlabels');
+    } else {
+        document.querySelector('body').classList.remove('showlabels');
+    }
+});
