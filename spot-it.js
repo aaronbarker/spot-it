@@ -114,8 +114,8 @@ function createItem(words, wordNum){
     var content = words[wordNum];
     var label, content2, image;
     // console.debug("createItem",content);
-    if(content.indexOf("^") !== -1){
-        content2 = content.split("^");
+    if(content.indexOf(",") !== -1){
+        content2 = content.split(",");
         // console.log(content2);
         content = content2[0];
         label = content2[1];
