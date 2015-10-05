@@ -9,9 +9,12 @@ var urlLoaded = false;
 var classHide = 'hide';
 var classRight = 'right';
 var classWrong = 'wrong';
+var classShowLabels = 'showlabels';
+var classUsed = 'used';
 
 var output = document.querySelector('#output');
 var itemEntry = document.querySelector("#itemEntry");
+var body = document.querySelector('body');
 
 
 function spotIt(words,cardSets){
@@ -127,8 +130,9 @@ function createItem(words, wordNum){
         // console.debug("wordNum",wordNum);
         if(content.indexOf('data') === 0){
             imageSrc = localStorage.getItem(content);
-            if(document.querySelector('li[data-local="'+content+'"]')){
-                document.querySelector('li[data-local="'+content+'"]').classList.add('used');
+            var dataLocal = document.querySelector('li[data-local="'+content+'"]');
+            if(dataLocal){
+                dataLocal.classList.add(classUsed);
             }
         } else {
             imageSrc = content;
@@ -161,64 +165,71 @@ function shuffle(array) {
 
 // stuff for entering in the data to be used
 
+// take the data in the entry field and use it to generate the cards and items
 function loadItems(){
-    newWords = parseEntry();
-    if(newWords.length > 2){
-        // console.log(newWords);
-        var croppedWords = findBaseString(newWords);
-        // set the share link to have the currently provided data
-        var queryString = findBaseString(newWords);
-        var bookmark = window.location.origin + window.location.pathname + queryString;
-        document.querySelector('.sharelink').setAttribute('href',bookmark);
-        spotIt(newWords,cardSets);
+    var newItems = parseEnteredItems(itemEntry);
+    if(newItems.length > 2){
+        // console.log(newItems);
+        makeShareLink(newItems);
+        spotIt(newItems,cardSets);
         if(!urlLoaded){
             document.querySelector('#urlWarning').classList.add(classHide);
         }
-        document.querySelector('body').classList.add('have-items');
+        body.classList.add('have-items');
     } else {
-        document.querySelector('body').classList.remove('have-items');
+        body.classList.remove('have-items');
     }
-    dataItemsUsed();
+    findDataItemsUsed();
 }
 
-function parseEntry(){
+function makeShareLink(newItems){
+    var queryString = findBaseString(newItems);
+    var bookmark = window.location.origin + window.location.pathname + queryString;
+    document.querySelector('.sharelink').setAttribute('href',bookmark);
+}
+
+function parseEnteredItems(itemEntry){
     itemEntry.value = itemEntry.value.trim();
     var newWords = itemEntry.value;
     // console.log("newWords",newWords,newWords.split("\n"));
     return newWords.split("\n");
 }
 
-function demoData(){
+function setupDemoLinks(){
     [].forEach.call(document.querySelectorAll('[data-demo]'),function(elem){
-        // console.log(elem);
         elem.addEventListener('click',function(event){
             event.preventDefault();
-            var demo = elem.getAttribute('data-demo');
-            itemEntry.value = window[demo].join('\n');
+            itemEntry.value = window[elem.getAttribute('data-demo')].join('\n');
             loadItems();
         });
     });
 }
 
 function setupControls(){
+    // when we leave the entry field, run loadItems
     itemEntry.addEventListener("blur",loadItems);
+    
+    // setup all the links that open sections
     var expanders = document.querySelectorAll(".expander");
     [].forEach.call(expanders,function(elem){
-        // console.log(elem);
         elem.addEventListener('click',function(event){
             event.preventDefault();
+            // get the target the expander is pointing at
             var target = elem.getAttribute('href');
+            // remove the hiding class from the target
             document.querySelector(target).classList.remove(classHide);
+            // remove the triggering link
             elem.parentNode.removeChild(elem);
         });
     });
+    
+    // setup the show labels checkbox
     var showlabels = document.querySelector("#showvalues");
     showlabels.addEventListener('change',function(){
-        // console.log("changed",showlabels.checked);
         if(showlabels.checked){
-            document.querySelector('body').classList.add('showlabels');
+            body.classList.add(classShowLabels);
         } else {
-            document.querySelector('body').classList.remove('showlabels');
+            body.classList.remove(classShowLabels);
         }
         makeStuffFit();
     });
@@ -226,9 +237,10 @@ function setupControls(){
 
 
 function init(){
-    demoData();
+    setupDemoLinks();
     setupControls();
     
+    // if we have a demo defined in the URL, load it up
     var loadDemo = getParameterByName('demo');
     if(loadDemo){
         // console.log("loadDemo",loadDemo);

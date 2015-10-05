@@ -3,7 +3,7 @@ function saveData(){
     var name = window.prompt("What should we name this set of data?");
     // var name = "test";
     var curData = {};
-    curData[name] = parseEntry();
+    curData[name] = parseEnteredItems(itemEntry);
     console.debug(curData);
     var storage = localStorage.getItem("spot-it");
     storage = JSON.parse(storage);
@@ -165,7 +165,7 @@ document.querySelector('.local_show').addEventListener('click',function(event){
     if(target.nodeName === "IMG"){
         // console.log("use image",target);
         // console.log(target.parentNode,target.parentNode.classList.contains('used'),target.parentNode.classList);
-        if(target.parentNode.classList.contains('used')){
+        if(target.parentNode.classList.contains(classUsed)){
             // console.log("has used");
             var theList = itemEntry.value.split("\n");
             // console.log(theList);
@@ -184,19 +184,19 @@ document.querySelector('.local_show').addEventListener('click',function(event){
     }
 });
 
-function dataItemsUsed(){
+function findDataItemsUsed(){
     // check the textarea for any items used
-    // first remove any existing (we will reapply them later)
-    var used = document.querySelectorAll('.used');
+    // first remove any existing found indicators (we will reapply them later)
+    var used = document.querySelectorAll('.'+classUsed);
     if(used.length){
-        [].forEach.call(document.querySelectorAll('.used'),function(elem){
-            elem.classList.remove('used');
+        [].forEach.call(document.querySelectorAll('.'+classUsed),function(elem){
+            elem.classList.remove(classUsed);
         });
     }
     // now loop through existing saved data items and see if they are in the list
     [].forEach.call(document.querySelectorAll('[data-local]'),function(elem){
         if(dataItemUsed(elem.getAttribute('data-local'))){
-            elem.classList.add('used');
+            elem.classList.add(classUsed);
         }
     });
 }
