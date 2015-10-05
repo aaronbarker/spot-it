@@ -25,7 +25,7 @@ function readStorage(){
     saves.innerHTML = "";
     for(var key in storage) {
         // console.debug(key,storage[key]);
-        saves.innerHTML += '<li><a href="#d" data-saved="'+key+'" data-data="'+storage[key]+'">'+key+'</a> <a href="#d" class="save-remove" data-key="'+key+'">(delete)</a></li>';
+        saves.innerHTML += '<li><a href="#d" data-saved="'+key+'" data-data="'+storage[key].join("^")+'">'+key+'</a> <a href="#d" class="save-remove" data-key="'+key+'">(delete)</a></li>';
     }
     
     [].forEach.call(document.querySelectorAll('[data-saved]'),function(elem){
@@ -33,7 +33,8 @@ function readStorage(){
         elem.addEventListener('click',function(event){
             event.preventDefault();
             var data = elem.getAttribute('data-data');
-            itemEntry.value = data.replace(/,/g,'\n');
+            console.log("data",data);
+            itemEntry.value = data.replace(/\^/g,'\n');
             loadItems();
         });
     });
@@ -104,3 +105,49 @@ if(getParameterByName('value')){
     document.querySelector('#urlWarning').classList.remove(classHide);
     
 }
+
+// list any locally stored images
+function listLocal(){
+    var theList = "";
+    document.querySelector('.local_show').innerHTML = "";
+    for(var key in localStorage) {
+        // console.debug(key,localStorage[key]);
+        // saves.innerHTML += '<li><a href="#d" data-saved="'+key+'" data-data="'+storage[key]+'">'+key+'</a> <a href="#d" class="save-remove" data-key="'+key+'">(delete)</a></li>';
+        if(key.indexOf('data') === 0){
+            theList += '<li data-local="'+key+'" title="Remove this image">'+(key.replace("data:",""))+'<br /><img src="'+localStorage[key]+'" width="50" /></li>';
+        }
+    }
+    if(theList.length){
+        document.querySelector('.local_show').innerHTML = theList;
+        document.querySelector('#local').classList.remove(classHide);
+    }
+}
+listLocal();
+
+function removeLocal(key){
+    localStorage.removeItem(key);
+    var theItem = document.querySelector('[data-local="'+key+'"]');
+    if(theItem && theItem.parentNode){
+        theItem.parentNode.removeChild(theItem);
+    }
+}
+document.querySelector('.remove-local-all').addEventListener('click',function(event){
+    event.preventDefault();
+    for(var key in localStorage) {
+        // console.debug(key,localStorage[key]);
+        if(key.indexOf('data') === 0){
+            removeLocal(key);
+        }
+    }
+});
+document.querySelector('.local_show').addEventListener('click',function(event){
+    var target = event.target;
+    while(target.nodeName !== "HTML"){
+        if(target.nodeName === "LI"){ // found the closest LI
+            break;
+        }
+        target = target.parentNode;
+        // console.debug("next parent",target);
+    };
+    removeLocal(target.getAttribute('data-local'));
+});

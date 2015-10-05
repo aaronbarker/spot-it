@@ -112,7 +112,7 @@ function createItems(curCard, words){
 }
 function createItem(words, wordNum){
     var content = words[wordNum];
-    var label, content2, image;
+    var label, content2, image, imageSrc;
     // console.debug("createItem",content);
     if(content.indexOf(",") !== -1){
         content2 = content.split(",");
@@ -122,10 +122,15 @@ function createItem(words, wordNum){
         // console.log("has a label", label, content);
     }
     // var regex = /\.(jpg|png|gif|svg)$/;
-    if(content.indexOf('http') === 0){ // is a URL, so is an image
+    if(content.indexOf('http') === 0 || content.indexOf('data') === 0){ // is a URL, so is an image
         // console.debug("image");
         // console.debug("wordNum",wordNum);
-        content = '<img src="'+content+'"/>';
+        if(content.indexOf('data') === 0){
+            imageSrc = localStorage.getItem(content);
+        } else {
+            imageSrc = content;
+        }
+        content = '<img src="'+imageSrc+'"/>';
         if(label) content += '<span class="card__item__label">'+label+'</span>';
     }
     return '<span class="card__item" data-item="'+wordNum+'" title="Item '+wordNum+'">'+content+'</span>';
@@ -173,6 +178,7 @@ function loadItems(){
 }
 
 function parseEntry(){
+    itemEntry.value = itemEntry.value.trim();
     var newWords = itemEntry.value;
     // console.log("newWords",newWords,newWords.split("\n"));
     return newWords.split("\n");

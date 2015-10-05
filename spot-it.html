@@ -84,9 +84,18 @@
                 </ul>
                 <p>If you enter more or less than those numbers we will truncate your list down to the next lower number, except for below 2 where we won't be able to use it at all. I don't really understand the math/logic, so am not sure why there aren't 5 and 7 per card options.  I used what was made available in <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">this article</a>.</p>
                 
-                <p>Separate each item by a return.  You can use text, or if you provide URLs we will attempt to load those URLs as images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
+                <p>Separate each item in the list by a return.  You can use words, or provide images using one of the options below.</p>
+                
+                <h3>URL Reference</h3>
+                <p>If you provide URLs instead of words we will attempt to load those URLs as images. If your images are different aspect ratios (square, landscape, portrait) your cards will be difference sizes as each card is made up of a different mixture of sizes.  For best results, have all images be the same general aspect ratio.</p>
                 
                 <p>You can optionally provide a label for images by adding a , to the end of the image URL and then putting your label.  <code>http://path/to/image.jpg,label here</code></p>
+                
+                <h3>Upload</h3>
+                
+                <p>You can drag images anywhere on to this page and they will be used for your game. The images are NOT uploaded to our site, but are saved in your browser. Images are restricted to 200kb each. Any that are larget than 200kb will silently fail (I'll impove this some day). After you add them to the page an interface will be added where you can remove them from your local storage at any time. The filename before the extention will be used as an optional label. So for <code>Mountain.jpg</code> the label would be <code>Mountain</code></p>
+                
+                <p>If you upload photos, then you can not use the "Link to this set" option as those that you send links to will not have the images locally.</p>
             </div>
             <p class="show-with-items">
                 <a href="#details" class="expander">Show card build details</a>
@@ -130,6 +139,11 @@
             
 
         </section>
+        <section id="local" class="hide-for-print hide">
+            <h2>Locally stored images</h2>
+            <p>These are the images we are storing locally for you. You can <a href="#d" class="remove-local-all">remove them all</a> or only certain ones by clicking them below.  Any you remove will no longer be available for showing in a game.  If you have any saved games, the images referenced there that you delete will come up broken.</p>
+            <ul class="local_show"></ul>
+        </section>
         <section id="about" class="hide-for-print">
             <h2>About this project</h2>
             <p>Our family purchased the original <a href="http://www.amazon.com/gp/product/B0039S7NO6">Spot it</a> game and I was facinated by how there could only be one match no matter what two cards you looked at.  I went to the internet to find out how it worked.  I found <a href="http://math.stackexchange.com/questions/36798/what-is-the-math-behind-the-game-spot-it">several</a> <a href="http://bowmandickson.com/2012/07/15/math-circle-problem-analysis-of-the-game-spot-it/">discussions</a> about it that were all above my mental capacities for math.  Then I bumped into <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">this article</a> that had examples of what the cards would be for different item numbers.  Well if I didn't have to figure things out, I could do something with that.</p>
@@ -139,8 +153,6 @@
             <p>Naturally I had to keep adding functionality, demo content, save the data locally, pass content in via the URL, load demos via URL, etc. The basic card generation and game I had done in a day, all the other stuff took several weekends.</p>
             
             <p>I hope this is of benefit to others. I found <a href="https://creativenrg.wordpress.com/2015/06/22/mathematical-magic-goldman-family-spot-it/">this blog post</a> about creating a Spot It game with family pictures. It looks like it took a lot of work to make that happen. Hopefully this site allows similar creations in a fraction of the time.</p>
-            
-            <p>In describing the functionality to my non-progammer wife, I realized how difficult it may be for people to get photos to a place where they have a URL to put into the input. Providing an interface for "uploading" your own photos (they would stay in the browser, not come to my server) is a much bigger project.  It seems I will need to tackle that to make this user friendly for the masses, but will release it for the geeks for now. Sorry masses.</p>
             
             <p>I don't pretend to think this is perfect. It was hacked together pretty quickly despite it take so long. I debated between using newer technologies (SASS, ES6, etc) to help myself improve, but for now I decided to leave it as basic JavaScript so that it is easier for others to understand. Some day I may make it fancier.  So for all my techy friends, don't mock my lack of using the latest and greatest, it was for the greater good :)  Some day it will bother me enough to update everything, but for now it is what it is.</p>
             
@@ -161,6 +173,9 @@
                 <li>Make sure there are no duplicates</li>
             </ul>
         </section>
+        <div id="drop-box-overlay">
+        	<h1>Drop files anywhere to upload. Each file must be less than 200kb in filesize. Only .jpg, .gif and .png files are allowed.</h1>
+        </div>
         <a href="https://github.com/aaronbarker/spot-it" class="hide-for-print"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
         <script src="game.js"></script>
         <script src="data.js"></script>
@@ -169,6 +184,7 @@
         <script src="spot-it.js"></script>
         <script src="storage.js"></script>
         <script src="print.js"></script>
+        <script src="upload.js"></script>
     </body>
 </html>
 
