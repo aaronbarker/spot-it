@@ -127,6 +127,9 @@ function createItem(words, wordNum){
         // console.debug("wordNum",wordNum);
         if(content.indexOf('data') === 0){
             imageSrc = localStorage.getItem(content);
+            if(document.querySelector('li[data-local="'+content+'"]')){
+                document.querySelector('li[data-local="'+content+'"]').classList.add('used');
+            }
         } else {
             imageSrc = content;
         }
@@ -175,6 +178,7 @@ function loadItems(){
     } else {
         document.querySelector('body').classList.remove('have-items');
     }
+    dataItemsUsed();
 }
 
 function parseEntry(){

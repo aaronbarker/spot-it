@@ -126,9 +126,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			var data = evt.target.result;
 
 			// Make sure the data loaded is long enough to represent a real file.
-            if(data.length > 200000){
+            if(data.length > 140000){
                 // console.log("too big:",file.name);
-                alert(file.name+" is too big (larger than 200kb). \nFile not saved or available for use in games.");
+                alert(file.name+" is too big (larger than 100kb). \nFile not saved or available for use in games.");
             } else
 			if(data.length > 128){
 				/*

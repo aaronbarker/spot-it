@@ -64,7 +64,7 @@ document.querySelector('.save-it').addEventListener('click',function(event){
     event.preventDefault();
     saveData();
 });
-document.querySelector('#saves').classList.remove(classHide)
+document.querySelector('#saves').classList.remove(classHide);
 
 // stuff for accessing data from the URL
 
@@ -114,7 +114,7 @@ function listLocal(){
         // console.debug(key,localStorage[key]);
         // saves.innerHTML += '<li><a href="#d" data-saved="'+key+'" data-data="'+storage[key]+'">'+key+'</a> <a href="#d" class="save-remove" data-key="'+key+'">(delete)</a></li>';
         if(key.indexOf('data') === 0){
-            theList += '<li data-local="'+key+'" title="Remove this image">'+(key.replace("data:",""))+'<br /><img src="'+localStorage[key]+'" width="50" /></li>';
+            theList += '<li data-local="'+key+'">'+(key.replace("data:",""))+'<br /><img src="'+localStorage[key]+'" data-key="'+key+'" data-label="'+(key.split(":")[1].split(".")[0])+'" width="50" /><br /><a href="#d" data-delete-local="'+key+'">Delete</a></li>';
         }
     }
     if(theList.length){
@@ -140,14 +140,70 @@ document.querySelector('.remove-local-all').addEventListener('click',function(ev
         }
     }
 });
+document.querySelector('.add-all-local').addEventListener('click',function(event){
+    event.preventDefault();
+    [].forEach.call(document.querySelectorAll('[data-local] img'),function(elem){
+        if(!dataItemUsed(elem.getAttribute('data-key'))){
+            itemEntry.value += '\n'+elem.getAttribute('data-key')+','+elem.getAttribute('data-label');
+        }
+    });
+    loadItems();
+});
 document.querySelector('.local_show').addEventListener('click',function(event){
     var target = event.target;
     while(target.nodeName !== "HTML"){
-        if(target.nodeName === "LI"){ // found the closest LI
+        // console.log(target.nodeName);
+        if(target.nodeName === "A" || target.nodeName === "IMG"){ // found the closest A
             break;
         }
         target = target.parentNode;
         // console.debug("next parent",target);
-    };
-    removeLocal(target.getAttribute('data-local'));
+    }
+    if(target.nodeName === "A"){
+        removeLocal(target.getAttribute('data-delete-local'));
+    }
+    if(target.nodeName === "IMG"){
+        // console.log("use image",target);
+        // console.log(target.parentNode,target.parentNode.classList.contains('used'),target.parentNode.classList);
+        if(target.parentNode.classList.contains('used')){
+            // console.log("has used");
+            var theList = itemEntry.value.split("\n");
+            // console.log(theList);
+            var newList = theList.filter(function(a){
+                // console.log(a.split(',')[0],target.getAttribute('data-key'),a.split(',')[0] !== target.getAttribute('data-key'));
+                
+                return a.split(',')[0] !== target.getAttribute('data-key');
+            });
+            // console.log(newList);
+            itemEntry.value = newList.join('\n');
+        } else {
+            // console.log("no used");
+            itemEntry.value += '\n'+target.getAttribute('data-key')+','+target.getAttribute('data-label');
+        }
+        loadItems();
+    }
 });
+
+function dataItemsUsed(){
+    // check the textarea for any items used
+    // first remove any existing (we will reapply them later)
+    var used = document.querySelectorAll('.used');
+    if(used.length){
+        [].forEach.call(document.querySelectorAll('.used'),function(elem){
+            elem.classList.remove('used');
+        });
+    }
+    // now loop through existing saved data items and see if they are in the list
+    [].forEach.call(document.querySelectorAll('[data-local]'),function(elem){
+        if(dataItemUsed(elem.getAttribute('data-local'))){
+            elem.classList.add('used');
+        }
+    });
+}
+
+function dataItemUsed(key){
+    if(itemEntry.value.indexOf(key) !== -1){
+        return true;
+    }
+    return false;
+}

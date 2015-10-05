@@ -93,7 +93,7 @@
                 
                 <h3>Upload</h3>
                 
-                <p>You can drag images anywhere on to this page and they will be used for your game. The images are NOT uploaded to our site, but are saved in your browser. Images are restricted to 200kb each. Any that are larget than 200kb will silently fail (I'll impove this some day). After you add them to the page an interface will be added where you can remove them from your local storage at any time. The filename before the extention will be used as an optional label. So for <code>Mountain.jpg</code> the label would be <code>Mountain</code></p>
+                <p>You can drag images anywhere on to this page and they will be used for your game. The images are NOT uploaded to our site, but are saved in your browser. Images are restricted to 100kb each. Any that are larger than 100kb will warn you that they won't be used. After you add them to the page an interface will be added where you can remove them from your local storage at any time. The filename before the extention will be used as an optional label. So for <code>Mountain.jpg</code> the label would be <code>Mountain</code>. The reason for the 100kb limit is that browser restrict how much total can be saved, and this is our attempt to keep you under that limit.</p>
                 
                 <p>If you upload photos, then you can not use the "Link to this set" option as those that you send links to will not have the images locally.</p>
             </div>
@@ -110,6 +110,15 @@
                     <dt>Cards: </dt>
                         <dd class="numCards"></dd>
                 </dl>
+            </section>
+            <section id="local" class="hide-for-print hide">
+                <h2>Locally stored images</h2>
+                <p>These are the images we are storing locally for you. You can <a href="#d" class="remove-local-all">remove them all</a> or only certain ones by clicking them below.  Any you remove will no longer be available for showing in a game.  If you have any saved games, the images referenced there that you delete will come up broken.</p>
+                
+                <p>Items marked in green are used in the current set.  Click an image to add it to the current set, click it again to remove it. Click "Delete" to remove it all together.</p>
+                
+                <p><a href="#d" class="add-all-local">Add all locally stored images</a></p>
+                <ul class="local_show"></ul>
             </section>
             <div class="setData">
                 <section id="demo" class="data-group">
@@ -139,11 +148,7 @@
             
 
         </section>
-        <section id="local" class="hide-for-print hide">
-            <h2>Locally stored images</h2>
-            <p>These are the images we are storing locally for you. You can <a href="#d" class="remove-local-all">remove them all</a> or only certain ones by clicking them below.  Any you remove will no longer be available for showing in a game.  If you have any saved games, the images referenced there that you delete will come up broken.</p>
-            <ul class="local_show"></ul>
-        </section>
+
         <section id="about" class="hide-for-print">
             <h2>About this project</h2>
             <p>Our family purchased the original <a href="http://www.amazon.com/gp/product/B0039S7NO6">Spot it</a> game and I was facinated by how there could only be one match no matter what two cards you looked at.  I went to the internet to find out how it worked.  I found <a href="http://math.stackexchange.com/questions/36798/what-is-the-math-behind-the-game-spot-it">several</a> <a href="http://bowmandickson.com/2012/07/15/math-circle-problem-analysis-of-the-game-spot-it/">discussions</a> about it that were all above my mental capacities for math.  Then I bumped into <a href="http://radiganengineering.com/2013/01/spot-it-howd-they-do-that/">this article</a> that had examples of what the cards would be for different item numbers.  Well if I didn't have to figure things out, I could do something with that.</p>

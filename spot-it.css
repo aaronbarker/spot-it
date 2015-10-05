@@ -196,9 +196,15 @@ textarea {
     border:1px solid black;
     text-align:center;
     margin:10px;
-    cursor:pointer;
+}
+.local_show img {
+    cursor: pointer;
 }
 
+.used[class] {
+    border-color:green;
+    background: rgb(129, 241, 160);
+}
 
 .upload {
     border:1px solid black;
