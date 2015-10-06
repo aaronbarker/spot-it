@@ -199,6 +199,7 @@ textarea {
 }
 .local_show img {
     cursor: pointer;
+    width:50px;
 }
 
 .used[class] {
@@ -242,13 +243,13 @@ textarea {
     opacity: 1;
 }
 
-#drop-box-overlay h1 {
+#drop-box-overlay .message {
     padding: 2em;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
-
+    text-align: center;
     border: 2px solid #679B00;
     background-color: #C9F76F;
     -moz-border-radius: 4px 4px;
@@ -261,6 +262,9 @@ textarea {
     color: #222222;
     font-size: 150%;
     text-shadow: 1px 1px 1px #FFFFFF;
+}
+.currentlyProcessing {
+    width:100px;
 }
 
 .show {

@@ -110,17 +110,21 @@ if(getParameterByName('value')){
 function listLocal(){
     var theList = "";
     document.querySelector('.local_show').innerHTML = "";
+    var storageTotal = 0;
     for(var key in localStorage) {
         // console.debug(key,localStorage[key]);
         // saves.innerHTML += '<li><a href="#d" data-saved="'+key+'" data-data="'+storage[key]+'">'+key+'</a> <a href="#d" class="save-remove" data-key="'+key+'">(delete)</a></li>';
+        storageTotal += localStorage[key].length;
         if(key.indexOf('data') === 0){
-            theList += '<li data-local="'+key+'">'+(key.replace("data:",""))+'<br /><img src="'+localStorage[key]+'" data-key="'+key+'" data-label="'+(key.split(":")[1].split(".")[0])+'" width="50" /><br /><a href="#d" data-delete-local="'+key+'">Delete</a></li>';
+            theList += '<li data-local="'+key+'">'+(key.replace("data:",""))+'<br /><img src="'+localStorage[key]+'" data-key="'+key+'" data-label="'+(key.split(":")[1].split(".")[0])+'"  /><br /><a href="#d" data-delete-local="'+key+'">Delete</a></li>';
         }
     }
     if(theList.length){
         document.querySelector('.local_show').innerHTML = theList;
         document.querySelector('#local').classList.remove(classHide);
     }
+    var prettyStorageTotal = (Math.floor(storageTotal/1024)/1000).toLocaleString()+'mb';
+    console.log("StorageTotal: "+prettyStorageTotal);
 }
 listLocal();
 
