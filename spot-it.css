@@ -271,3 +271,6 @@ textarea {
     opacity: 1;
     display:block !important;
 }
+.dropzone-previews, #dropzone {
+    display:none;
+}
