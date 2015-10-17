@@ -119,7 +119,7 @@ function listLocal(){
             theList += '<li data-local="'+key+'">'+(key.replace("data:",""))+'<br /><img src="'+localStorage[key]+'" data-key="'+key+'" data-label="'+(key.split(":")[1].split(".")[0])+'"  /><br /><a href="#d" data-delete-local="'+key+'">Delete</a></li>';
         }
     }
-    if(theList.length){
+    if(theList.length > 1){
         document.querySelector('.local_show').innerHTML = theList;
         document.querySelector('#local').classList.remove(classHide);
     }

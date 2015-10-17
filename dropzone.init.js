@@ -11,6 +11,52 @@
     clickable: false,
     url: '/upload',
     filesizeBase: 1000,
+    dragenter: function(){
+        // console.log("dragenter");
+        document.querySelector('#drop-box-overlay').classList.add('show');
+    },
+    dragover: function(evt){
+        // console.log("dragover");
+        evt.stopPropagation();
+        evt.preventDefault();
+    },
+    drop: function(){
+        // console.log("drop");
+        // document.querySelector("#drop-box-overlay").classList.remove('show');
+        document.querySelector(".message .instructions").classList.add('hide');
+        document.querySelector(".message .processing").classList.remove('hide');
+    },
+    dragleave: function(evt){
+        // console.log("dragleave");
+        /*
+		 * We have to double-check the 'leave' event state because this event stupidly
+		 * gets fired by JavaScript when you mouse over the child of a parent element;
+		 * instead of firing a subsequent enter event for the child, JavaScript first
+		 * fires a LEAVE event for the parent then an ENTER event for the child even
+		 * though the mouse is still technically inside the parent bounds. If we trust
+		 * the dragenter/dragleave events as-delivered, it leads to "flickering" when
+		 * a child element (drop prompt) is hovered over as it becomes invisible,
+		 * then visible then invisible again as that continually triggers the enter/leave
+		 * events back to back. Instead, we use a 10px buffer around the window frame
+		 * to capture the mouse leaving the window manually instead. (using 1px didn't
+		 * work as the mouse can skip out of the window before hitting 1px with high
+		 * enough acceleration).
+		 */
+		if(evt.pageX < 10 || evt.pageY < 10 || document.querySelector('body').offsetWidth - evt.pageX < 10  || document.querySelector('body').offsetHeight - evt.pageY < 10) {
+			document.querySelector("#drop-box-overlay").classList.remove('show');
+			// document.querySelector("#drop-box-prompt").classList.remove('show');
+		}
+    },
+    // processing: function(file){
+    //     console.log(file);
+    //     // document.querySelector('.currentlyProcessing').setAttribute('src',file);
+    // },
+    queuecomplete:function(){
+        // console.log("queuecomplete");
+        document.querySelector('#drop-box-overlay').classList.remove('show');
+        document.querySelector(".message .instructions").classList.remove('hide');
+        document.querySelector(".message .processing").classList.add('hide');
+    },
     previewsContainer: '.dropzone-previews',
     thumbnail: function(file, dataUrl) {
       if (file.previewElement) {
@@ -26,6 +72,7 @@
               document.querySelector("#itemEntry").value = document.querySelector("#itemEntry").value + "\ndata:"+file.name+","+(file.name.split('.')[0]);
               console.log("file.name",dataUrl.length);
               localStorage.setItem("data:"+file.name,dataUrl);
+              document.querySelector('.currentlyProcessing').setAttribute('src',dataUrl);
           } else {
               console.log('already have '+file.name);
           }
