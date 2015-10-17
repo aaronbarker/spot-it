@@ -135,12 +135,14 @@ function removeLocal(key){
         theItem.parentNode.removeChild(theItem);
     }
 }
-document.querySelector('.remove-local-all').addEventListener('click',function(event){
+document.querySelector('.delete-all-local').addEventListener('click',function(event){
     event.preventDefault();
-    for(var key in localStorage) {
-        // console.debug(key,localStorage[key]);
-        if(key.indexOf('data') === 0){
-            removeLocal(key);
+    if(confirm('Are you sure you want to delete all images?\nYou will need to re-upload them to get them back.')){
+        for(var key in localStorage) {
+            // console.debug(key,localStorage[key]);
+            if(key.indexOf('data') === 0){
+                removeLocal(key);
+            }
         }
     }
 });
@@ -150,6 +152,16 @@ document.querySelector('.add-all-local').addEventListener('click',function(event
         if(!dataItemUsed(elem.getAttribute('data-key'))){
             itemEntry.value += '\n'+elem.getAttribute('data-key')+','+elem.getAttribute('data-label');
         }
+    });
+    loadItems();
+});
+document.querySelector('.remove-all-local').addEventListener('click',function(event){
+    event.preventDefault();
+    [].forEach.call(document.querySelectorAll('.used'),function(elem){
+        // console.log(elem,elem.getAttribute('data-local'));
+        var newList = removeFromList(elem.getAttribute('data-local'));
+        // console.log(newList);
+        itemEntry.value = newList.join('\n');
     });
     loadItems();
 });
@@ -171,13 +183,14 @@ document.querySelector('.local_show').addEventListener('click',function(event){
         // console.log(target.parentNode,target.parentNode.classList.contains('used'),target.parentNode.classList);
         if(target.parentNode.classList.contains(classUsed)){
             // console.log("has used");
-            var theList = itemEntry.value.split("\n");
-            // console.log(theList);
-            var newList = theList.filter(function(a){
-                // console.log(a.split(',')[0],target.getAttribute('data-key'),a.split(',')[0] !== target.getAttribute('data-key'));
-                
-                return a.split(',')[0] !== target.getAttribute('data-key');
-            });
+            // var theList = itemEntry.value.split("\n");
+            // // console.log(theList);
+            // var newList = theList.filter(function(a){
+            //     // console.log(a.split(',')[0],target.getAttribute('data-key'),a.split(',')[0] !== target.getAttribute('data-key'));
+            //     
+            //     return a.split(',')[0] !== target.getAttribute('data-key');
+            // });
+            var newList = removeFromList(target.getAttribute('data-key'));
             // console.log(newList);
             itemEntry.value = newList.join('\n');
         } else {
@@ -187,6 +200,17 @@ document.querySelector('.local_show').addEventListener('click',function(event){
         loadItems();
     }
 });
+
+function removeFromList(key){
+    var theList = itemEntry.value.split("\n");
+    // console.log(theList);
+    var newList = theList.filter(function(a){
+        // console.log(a.split(',')[0],target.getAttribute('data-key'),a.split(',')[0] !== target.getAttribute('data-key'));
+        
+        return a.split(',')[0] !== key;
+    });
+    return newList;
+}
 
 function findDataItemsUsed(){
     // check the textarea for any items used
