@@ -115,7 +115,7 @@ function createItems(curCard, words){
 }
 function createItem(words, wordNum){
     var content = words[wordNum];
-    var label, content2, image, imageSrc;
+    var label, content2, image, imageSrc, imageClass='';
     // console.debug("createItem",content);
     if(content.indexOf(",") !== -1){
         content2 = content.split(",");
@@ -139,8 +139,9 @@ function createItem(words, wordNum){
         }
         content = '<img src="'+imageSrc+'"/>';
         if(label) content += '<span class="card__item__label">'+label+'</span>';
+        imageClass = " card__item--image";
     }
-    return '<span class="card__item" data-item="'+wordNum+'" title="Item '+wordNum+'">'+content+'</span>';
+    return '<span class="card__item'+imageClass+'" data-item="'+wordNum+'" title="Item '+wordNum+'">'+content+'</span>';
 }
 
 // stolen from some random stack overflow article that I forgot to write down

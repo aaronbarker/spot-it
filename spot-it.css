@@ -64,6 +64,9 @@ body {
     /*width:100%;*/
     max-width:100%;
 }
+.card__item--image {
+    justify-content: flex-start;
+}
 .card__item__label {
     /*position:absolute;*/
     bottom:0;
