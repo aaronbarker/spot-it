@@ -7,6 +7,7 @@ var printSizes = document.querySelectorAll('[data-size]');
             document.querySelector('[data-size].active').classList.remove('active');
         }
         elem.classList.add('active');
+        loadItems();
     });
 });
 function setPrintSize(size){
@@ -15,6 +16,7 @@ function setPrintSize(size){
     });
     document.querySelector('body').classList.add(size);
     makeStuffFit();
+    loadItems();
 }
 
 var rowCounts = document.querySelectorAll('[data-rowcount]');
@@ -26,6 +28,7 @@ var rowCounts = document.querySelectorAll('[data-rowcount]');
             document.querySelector('[data-rowcount].active').classList.remove('active');
         }
         elem.classList.add('active');
+        loadItems();
     });
 });
 
@@ -35,6 +38,7 @@ function setRowCount(count){
     });
     document.querySelector('body').classList.add('per-row-'+count);
     makeStuffFit();
+    loadItems();
 }
 
 

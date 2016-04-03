@@ -183,7 +183,7 @@ function loadItems(){
 }
 
 function makeShareLink(newItems){
-    var queryString = findBaseString(newItems);
+    var queryString = findBaseString(newItems)+"&size="+(document.querySelector("a[data-size].active").getAttribute("data-size"))+"&rowcount="+(document.querySelector("a[data-rowcount].active").getAttribute("data-rowcount"))+"&showvalues="+(document.querySelector("#showvalues").checked);
     var bookmark = window.location.origin + window.location.pathname + queryString;
     document.querySelector('.sharelink').setAttribute('href',bookmark);
 }
@@ -232,6 +232,7 @@ function setupControls(){
             body.classList.remove(classShowLabels);
         }
         makeStuffFit();
+        loadItems();
     });
 }
 
@@ -240,6 +241,25 @@ function init(){
     setupDemoLinks();
     setupControls();
     
+    // if we have a printSize defined in the URL, apply it
+    var size = getParameterByName('size');
+    if(size){
+        document.querySelector("a[data-size='"+size+"']").click();
+    }
+    
+    // if we have a printSize defined in the URL, apply it
+    var rowcount = getParameterByName('rowcount');
+    if(rowcount){
+        document.querySelector("a[data-rowcount='"+rowcount+"']").click();
+    }
+    
+    // if we have a printSize defined in the URL, apply it
+    var showvalues = getParameterByName('showvalues');
+    if(showvalues){
+        console.log(showvalues);
+        document.querySelector("#showvalues").click();
+    }
+    
     // if we have a demo defined in the URL, load it up
     var loadDemo = getParameterByName('demo');
     if(loadDemo){
@@ -247,6 +267,7 @@ function init(){
         itemEntry.value = window[loadDemo].join('\n');
         loadItems();
     }
+    
 }
 
 document.addEventListener('DOMContentLoaded', init);
