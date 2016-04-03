@@ -101,7 +101,7 @@ if(getParameterByName('value')){
     itemEntry.value = itemList.join("\n");
     urlLoaded = true;
     loadItems();
-    urlLoaded = false;
+    // urlLoaded = false;
     document.querySelector('#urlWarning').classList.remove(classHide);
     
 }
