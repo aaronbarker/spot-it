@@ -10,6 +10,7 @@ var classHide = 'hide';
 var classRight = 'right';
 var classWrong = 'wrong';
 var classShowLabels = 'showlabels';
+var classRotate = 'rotate';
 var classUsed = 'used';
 
 var output = document.querySelector('#output');
@@ -24,16 +25,26 @@ function spotIt(words,cardSets){
     var cards = [];
     // console.log("word count", wordCount);
     // based on the wordCount, use a different cardSet
+    body.classList.remove('words-per-card-8');
+    body.classList.remove('words-per-card-6');
+    body.classList.remove('words-per-card-4');
+    body.classList.remove('words-per-card-3');
+    body.classList.remove('words-per-card-2');
     if(wordCount >= 57) {
         cardSet = cardSets.words57;
+        body.classList.add('words-per-card-8');
     } else if (wordCount >= 31){
         cardSet = cardSets.words31;
+        body.classList.add('words-per-card-6');
     } else if (wordCount >= 13){
         cardSet = cardSets.words13;
+        body.classList.add('words-per-card-4');
     } else if (wordCount >= 7){
         cardSet = cardSets.words7;
+        body.classList.add('words-per-card-3');
     } else if (wordCount >= 3){
         cardSet = cardSets.words3;
+        body.classList.add('words-per-card-2');
     }
     if(cardSet){
         // show game trigger
@@ -75,6 +86,11 @@ function spotIt(words,cardSets){
     // return cards;
     
     output.innerHTML = cards.join(' ');
+    if(body.classList.contains(classRotate)){
+        [].forEach.call(document.querySelectorAll('.card__item'),function(cur){
+            cur.style.transform = 'rotate('+Math.random()*360+'deg)';
+        });
+    }
 }
 
 function createCards(words, wordCount, randomNums){
@@ -184,7 +200,7 @@ function loadItems(){
 }
 
 function makeShareLink(newItems){
-    var queryString = findBaseString(newItems)+"&size="+(document.querySelector("a[data-size].active").getAttribute("data-size"))+"&rowcount="+(document.querySelector("a[data-rowcount].active").getAttribute("data-rowcount"))+"&showvalues="+(document.querySelector("#showvalues").checked);
+    var queryString = findBaseString(newItems)+"&size="+(document.querySelector("a[data-size].active").getAttribute("data-size"))+"&rowcount="+(document.querySelector("a[data-rowcount].active").getAttribute("data-rowcount"))+"&showvalues="+(document.querySelector("#showvalues").checked)+"&rotate="+(document.querySelector("#rotate").checked);
     var bookmark = window.location.origin + window.location.pathname + queryString;
     document.querySelector('.sharelink').setAttribute('href',bookmark);
 }
@@ -231,6 +247,18 @@ function setupControls(){
             body.classList.add(classShowLabels);
         } else {
             body.classList.remove(classShowLabels);
+        }
+        makeStuffFit();
+        loadItems();
+    });
+    
+    // setup the rotate checkbox
+    var rotate = document.querySelector("#rotate");
+    rotate.addEventListener('change',function(){
+        if(rotate.checked){
+            body.classList.add(classRotate);
+        } else {
+            body.classList.remove(classRotate);
         }
         makeStuffFit();
         loadItems();

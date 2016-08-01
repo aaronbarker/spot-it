@@ -9,7 +9,7 @@ body {
     /*display:flex;
     flex-direction:row;
     flex-wrap: wrap;*/
-    max-height: 320px;
+    max-height: 420px;
     overflow:scroll;
     border:2px solid grey;
 }
@@ -128,6 +128,136 @@ textarea {
     height:5in;
     width:8in;
 }
+.print4x4 .items-per-row {
+    display:none;
+}
+.print4x4 .card {
+    width:3.7in;
+    height:3.7in;
+    border-radius: 50%;
+    display: block;
+    position:relative;
+}
+.print4x4 .card .card__item {
+    height: 1in;
+    width: 1in;
+    float:left;
+    position:absolute;
+    border-radius: 50%;
+    overflow:hidden;
+    justify-content: center;
+    /*transform: translateY(-50%) translateX(-50%);*/
+    background-color: transparent !important; /* override test colors */
+}
+.print4x4 .card .card__item img {
+    height: 1in;
+    width: 1in;
+    object-fit: cover;
+}
+.print4x4 .card .card__item__label {
+    position: absolute;
+    top: 50%;
+    bottom:auto;
+    transform: translateY(-50%);
+}
+
+.print4x4.words-per-card-4 .card .card__item:nth-child(1){
+    top: calc(20% - .5in);
+    left: calc(50% - .5in);
+    background:red;
+}
+.print4x4.words-per-card-4 .card .card__item:nth-child(2){
+    top: calc(50% - .5in);
+    left: calc(80% - .5in);
+    background:orange;
+}
+.print4x4.words-per-card-4 .card .card__item:nth-child(3){
+    top: calc(80% - .5in);
+    left: calc(50% - .5in);
+    background:yellow;
+}
+.print4x4.words-per-card-4 .card .card__item:nth-child(4){
+    top: calc(50% - .5in);
+    left: calc(20% - .5in);
+    background:green;
+}
+
+
+.print4x4.words-per-card-6 .card .card__item:nth-child(1){
+    top: calc(22% - .5in);
+    left: calc(33% - .5in);
+    background:red;
+}
+.print4x4.words-per-card-6 .card .card__item:nth-child(2){
+    top: calc(22% - .5in);
+    left: calc(66% - .5in);
+    background:orange;
+}
+.print4x4.words-per-card-6 .card .card__item:nth-child(3){
+    top: calc(48% - .5in);
+    left: calc(50% - .5in);
+    background:yellow;
+}
+.print4x4.words-per-card-6 .card .card__item:nth-child(4){
+    top: calc(82% - .5in);
+    left: calc(50% - .5in);
+    background:green;
+}
+.print4x4.words-per-card-6 .card .card__item:nth-child(5){
+    top: calc(60% - .5in);
+    left: calc(20% - .5in);
+    background:blue;
+}
+.print4x4.words-per-card-6 .card .card__item:nth-child(6){
+    top: calc(60% - .5in);
+    left: calc(80% - .5in);
+    background:purple;
+}
+
+
+.print4x4.words-per-card-8 .card .card__item:nth-child(1){
+    top: calc(19% - .5in);
+    left: calc(36% - .5in);
+    background:red;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(2){
+    top: calc(19% - .5in);
+    left: calc(66% - .5in);
+    background:orange;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(3){
+    top: calc(50% - .5in);
+    left: calc(50% - .5in);
+    background:yellow;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(4){
+    top: calc(84% - .5in);
+    left: calc(50% - .5in);
+    background:green;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(5){
+    top: calc(42% - .5in);
+    left: calc(16% - .5in);
+    background:blue;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(6){
+    top: calc(42% - .5in);
+    left: calc(84% - .5in);
+    background:purple;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(7){
+    top: calc(70% - .5in);
+    left: calc(78% - .5in);
+    background:teal;
+}
+.print4x4.words-per-card-8 .card .card__item:nth-child(8){
+    top: calc(70% - .5in);
+    left: calc(22% - .5in);
+    background:silver;
+}
+
+
+
 .per-row-2 .card__item { 
     width: 50%;
 }
