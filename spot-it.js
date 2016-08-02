@@ -11,11 +11,15 @@ var classRight = 'right';
 var classWrong = 'wrong';
 var classShowLabels = 'showlabels';
 var classRotate = 'rotate';
+var classColorize = 'colorize';
+var classBigtext = 'bigtext';
 var classUsed = 'used';
 
 var output = document.querySelector('#output');
 var itemEntry = document.querySelector("#itemEntry");
 var body = document.querySelector('body');
+
+var colorList = ['red','orange','green','blue','purple','magenta','turquoise','firebrick'];
 
 
 function spotIt(words,cardSets){
@@ -91,6 +95,14 @@ function spotIt(words,cardSets){
             cur.style.transform = 'rotate('+Math.random()*360+'deg)';
         });
     }
+    
+    // add color to items for potential use later. First find a card, then loop through items of each card
+    [].forEach.call(document.querySelectorAll('.card'),function(curCard){
+        var curColors = shuffleArray(colorList);
+        [].forEach.call(curCard.querySelectorAll('.card__item'),function(cur,i){
+            cur.classList.add(curColors[i]);
+        });
+    });
 }
 
 function createCards(words, wordCount, randomNums){
@@ -200,7 +212,7 @@ function loadItems(){
 }
 
 function makeShareLink(newItems){
-    var queryString = findBaseString(newItems)+"&size="+(document.querySelector("a[data-size].active").getAttribute("data-size"))+"&rowcount="+(document.querySelector("a[data-rowcount].active").getAttribute("data-rowcount"))+"&showvalues="+(document.querySelector("#showvalues").checked)+"&rotate="+(document.querySelector("#rotate").checked);
+    var queryString = findBaseString(newItems)+"&size="+(document.querySelector("a[data-size].active").getAttribute("data-size"))+"&rowcount="+(document.querySelector("a[data-rowcount].active").getAttribute("data-rowcount"))+"&showvalues="+(document.querySelector("#showvalues").checked)+"&rotate="+(document.querySelector("#rotate").checked)+"&bigtext="+(document.querySelector("#bigtext").checked)+"&colorize="+(document.querySelector("#colorize").checked);
     var bookmark = window.location.origin + window.location.pathname + queryString;
     document.querySelector('.sharelink').setAttribute('href',bookmark);
 }
@@ -225,6 +237,7 @@ function setupDemoLinks(){
 function setupControls(){
     // when we leave the entry field, run loadItems
     itemEntry.addEventListener("blur",loadItems);
+    var newItems = parseEnteredItems(itemEntry);
     
     // setup all the links that open sections
     var expanders = document.querySelectorAll(".expander");
@@ -248,8 +261,7 @@ function setupControls(){
         } else {
             body.classList.remove(classShowLabels);
         }
-        makeStuffFit();
-        loadItems();
+        makeShareLink(newItems);
     });
     
     // setup the rotate checkbox
@@ -262,6 +274,28 @@ function setupControls(){
         }
         makeStuffFit();
         loadItems();
+    });
+    
+    // setup the colorize checkbox
+    var colorize = document.querySelector("#colorize");
+    colorize.addEventListener('change',function(){
+        if(colorize.checked){
+            body.classList.add(classColorize);
+        } else {
+            body.classList.remove(classColorize);
+        }
+        makeShareLink(newItems);
+    });
+    
+    // setup the bigtext checkbox
+    var bigtext = document.querySelector("#bigtext");
+    bigtext.addEventListener('change',function(){
+        if(bigtext.checked){
+            body.classList.add(classBigtext);
+        } else {
+            body.classList.remove(classBigtext);
+        }
+        makeShareLink(newItems);
     });
 }
 
@@ -276,17 +310,38 @@ function init(){
         document.querySelector("a[data-size='"+size+"']").click();
     }
     
-    // if we have a printSize defined in the URL, apply it
+    // if we have a rowcount defined in the URL, apply it
     var rowcount = getParameterByName('rowcount');
     if(rowcount){
         document.querySelector("a[data-rowcount='"+rowcount+"']").click();
     }
     
-    // if we have a printSize defined in the URL, apply it
+    // if we have a showvalues defined in the URL, apply it
     var showvalues = getParameterByName('showvalues');
-    if(showvalues){
-        console.log(showvalues);
+    if(showvalues === 'true'){
+        // console.log(showvalues);
         document.querySelector("#showvalues").click();
+    }
+    
+    // if we have a rotate defined in the URL, apply it
+    var rotate = getParameterByName('rotate');
+    if(rotate === 'true'){
+        // console.log(rotate);
+        document.querySelector("#rotate").click();
+    }
+    
+    // if we have a bigtext defined in the URL, apply it
+    var bigtext = getParameterByName('bigtext');
+    if(bigtext === 'true'){
+        // console.log(bigtext);
+        document.querySelector("#bigtext").click();
+    }
+    
+    // if we have a colorize defined in the URL, apply it
+    var colorize = getParameterByName('colorize');
+    if(colorize === 'true'){
+        // console.log(colorize);
+        document.querySelector("#colorize").click();
     }
     
     // if we have a demo defined in the URL, load it up
@@ -297,6 +352,24 @@ function init(){
         loadItems();
     }
     
+}
+
+function shuffleArray(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -108,6 +108,38 @@ textarea {
     width:45%;
     float:left;
 }
+.bigtext .card__item {
+    font-family: 'Comic Sans MS';
+    font-size:30px;
+    /* if they want big text, don't crop it off */
+    border-radius: 0 !important;
+    overflow: visible !important;
+}
+.colorize .red {
+    color:red;
+}
+.colorize .orange {
+    color:orange;
+}
+.colorize .green {
+    color:green;
+}
+.colorize .blue {
+    color:blue;
+}
+.colorize .purple {
+    color:purple;
+}
+.colorize .magenta {
+    color:magenta;
+}
+.colorize .turquoise {
+    color:turquoise;
+}
+.colorize .firebrick {
+    color:firebrick;
+}
+
 .print3x5 .card {
     height:2.7in;
     width:4.7in;
@@ -132,15 +164,15 @@ textarea {
     display:none;
 }
 .print4x4 .card {
-    width:3.7in;
-    height:3.7in;
+    width:3.375in;
+    height:3.375in;
     border-radius: 50%;
     display: block;
     position:relative;
 }
 .print4x4 .card .card__item {
-    height: 1in;
-    width: 1in;
+    height: .9in;
+    width: .9in;
     float:left;
     position:absolute;
     border-radius: 50%;
@@ -150,8 +182,8 @@ textarea {
     background-color: transparent !important; /* override test colors */
 }
 .print4x4 .card .card__item img {
-    height: 1in;
-    width: 1in;
+    height: .9in;
+    width: .9in;
     object-fit: cover;
 }
 .print4x4 .card .card__item__label {
@@ -162,97 +194,97 @@ textarea {
 }
 
 .print4x4.words-per-card-4 .card .card__item:nth-child(1){
-    top: calc(20% - .5in);
-    left: calc(50% - .5in);
+    top: calc(20% - .45in);
+    left: calc(50% - .45in);
     background:red;
 }
 .print4x4.words-per-card-4 .card .card__item:nth-child(2){
-    top: calc(50% - .5in);
-    left: calc(80% - .5in);
+    top: calc(50% - .45in);
+    left: calc(80% - .45in);
     background:orange;
 }
 .print4x4.words-per-card-4 .card .card__item:nth-child(3){
-    top: calc(80% - .5in);
-    left: calc(50% - .5in);
+    top: calc(80% - .45in);
+    left: calc(50% - .45in);
     background:yellow;
 }
 .print4x4.words-per-card-4 .card .card__item:nth-child(4){
-    top: calc(50% - .5in);
-    left: calc(20% - .5in);
+    top: calc(50% - .45in);
+    left: calc(20% - .45in);
     background:green;
 }
 
 
 .print4x4.words-per-card-6 .card .card__item:nth-child(1){
-    top: calc(22% - .5in);
-    left: calc(33% - .5in);
+    top: calc(22% - .45in);
+    left: calc(33% - .45in);
     background:red;
 }
 .print4x4.words-per-card-6 .card .card__item:nth-child(2){
-    top: calc(22% - .5in);
-    left: calc(66% - .5in);
+    top: calc(22% - .45in);
+    left: calc(66% - .45in);
     background:orange;
 }
 .print4x4.words-per-card-6 .card .card__item:nth-child(3){
-    top: calc(48% - .5in);
-    left: calc(50% - .5in);
+    top: calc(48% - .45in);
+    left: calc(50% - .45in);
     background:yellow;
 }
 .print4x4.words-per-card-6 .card .card__item:nth-child(4){
-    top: calc(82% - .5in);
-    left: calc(50% - .5in);
+    top: calc(82% - .45in);
+    left: calc(50% - .45in);
     background:green;
 }
 .print4x4.words-per-card-6 .card .card__item:nth-child(5){
-    top: calc(60% - .5in);
-    left: calc(20% - .5in);
+    top: calc(60% - .45in);
+    left: calc(20% - .45in);
     background:blue;
 }
 .print4x4.words-per-card-6 .card .card__item:nth-child(6){
-    top: calc(60% - .5in);
-    left: calc(80% - .5in);
+    top: calc(60% - .45in);
+    left: calc(80% - .45in);
     background:purple;
 }
 
 
 .print4x4.words-per-card-8 .card .card__item:nth-child(1){
-    top: calc(19% - .5in);
-    left: calc(36% - .5in);
+    top: calc(19% - .45in);
+    left: calc(36% - .45in);
     background:red;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(2){
-    top: calc(19% - .5in);
-    left: calc(66% - .5in);
+    top: calc(19% - .45in);
+    left: calc(66% - .45in);
     background:orange;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(3){
-    top: calc(50% - .5in);
-    left: calc(50% - .5in);
+    top: calc(50% - .45in);
+    left: calc(50% - .45in);
     background:yellow;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(4){
-    top: calc(84% - .5in);
-    left: calc(50% - .5in);
+    top: calc(84% - .45in);
+    left: calc(50% - .45in);
     background:green;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(5){
-    top: calc(42% - .5in);
-    left: calc(16% - .5in);
+    top: calc(42% - .45in);
+    left: calc(16% - .45in);
     background:blue;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(6){
-    top: calc(42% - .5in);
-    left: calc(84% - .5in);
+    top: calc(42% - .45in);
+    left: calc(84% - .45in);
     background:purple;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(7){
-    top: calc(70% - .5in);
-    left: calc(78% - .5in);
+    top: calc(70% - .45in);
+    left: calc(78% - .45in);
     background:teal;
 }
 .print4x4.words-per-card-8 .card .card__item:nth-child(8){
-    top: calc(70% - .5in);
-    left: calc(22% - .5in);
+    top: calc(70% - .45in);
+    left: calc(22% - .45in);
     background:silver;
 }
 
